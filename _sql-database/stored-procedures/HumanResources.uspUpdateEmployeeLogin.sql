@@ -1,0 +1,30 @@
+if exists (select * from sys.objects where object_id = object_id('[HumanResources].[uspUpdateEmployeeLogin]') and type = 'P')
+drop procedure [HumanResources].[uspUpdateEmployeeLogin]
+go
+
+
+CREATE PROCEDURE [HumanResources].[uspUpdateEmployeeLogin]
+    @BusinessEntityID [int], 
+    @OrganizationNode [hierarchyid],
+    @LoginID [nvarchar](256),
+    @JobTitle [nvarchar](50),
+    @HireDate [datetime],
+    @CurrentFlag [dbo].[Flag]
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        UPDATE [HumanResources].[Employee] 
+        SET [OrganizationNode] = @OrganizationNode 
+            ,[LoginID] = @LoginID 
+            ,[JobTitle] = @JobTitle 
+            ,[HireDate] = @HireDate 
+            ,[CurrentFlag] = @CurrentFlag 
+        WHERE [BusinessEntityID] = @BusinessEntityID;
+    END TRY
+    BEGIN CATCH
+        EXECUTE [dbo].[uspLogError];
+    END CATCH;
+END;
