@@ -1,53 +1,60 @@
-if not exists (select * from sys.objects where object_id = object_id('[Sales].[SalesOrderHeader]') and type = 'U')
-create table [Sales].[SalesOrderHeader]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Sales].[SalesOrderHeader]') AND type = 'U')
+CREATE TABLE [Sales].[SalesOrderHeader]
 (
-    [SalesOrderID] int not null identity(1, 1),
-    [RevisionNumber] tinyint not null default((0)),
-    [OrderDate] datetime not null default(getdate()),
-    [DueDate] datetime not null,
-    [ShipDate] datetime null,
-    [Status] tinyint not null default((1)),
-    [OnlineOrderFlag] Flag not null default((1)),
-    [SalesOrderNumber] as (isnull(N'SO'+CONVERT([nvarchar](23),[SalesOrderID]),N'*** ERROR ***')),
-    [PurchaseOrderNumber] OrderNumber collate SQL_Latin1_General_CP1_CI_AS null,
-    [AccountNumber] AccountNumber collate SQL_Latin1_General_CP1_CI_AS null,
-    [CustomerID] int not null,
-    [SalesPersonID] int null,
-    [TerritoryID] int null,
-    [BillToAddressID] int not null,
-    [ShipToAddressID] int not null,
-    [ShipMethodID] int not null,
-    [CreditCardID] int null,
-    [CreditCardApprovalCode] varchar(15) collate SQL_Latin1_General_CP1_CI_AS null,
-    [CurrencyRateID] int null,
-    [SubTotal] money not null default((0.00)),
-    [TaxAmt] money not null default((0.00)),
-    [Freight] money not null default((0.00)),
-    [TotalDue] as (isnull(([SubTotal]+[TaxAmt])+[Freight],(0))),
-    [Comment] nvarchar(128) collate SQL_Latin1_General_CP1_CI_AS null,
-    [rowguid] uniqueidentifier not null default(newid()),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_SalesOrderHeader_SalesOrderID] primary key ([SalesOrderID] asc)
+    [SalesOrderID] int NOT NULL IDENTITY(1, 1),
+    [RevisionNumber] tinyint NOT NULL DEFAULT((0)),
+    [OrderDate] datetime NOT NULL DEFAULT(getdate()),
+    [DueDate] datetime NOT NULL,
+    [ShipDate] datetime NULL,
+    [Status] tinyint NOT NULL DEFAULT((1)),
+    [OnlineOrderFlag] Flag NOT NULL DEFAULT((1)),
+    [SalesOrderNumber] AS (isnull(N'SO'+CONVERT([nvarchar](23),[SalesOrderID]),N'*** ERROR ***')),
+    [PurchaseOrderNumber] OrderNumber COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [AccountNumber] AccountNumber COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [CustomerID] int NOT NULL,
+    [SalesPersonID] int NULL,
+    [TerritoryID] int NULL,
+    [BillToAddressID] int NOT NULL,
+    [ShipToAddressID] int NOT NULL,
+    [ShipMethodID] int NOT NULL,
+    [CreditCardID] int NULL,
+    [CreditCardApprovalCode] varchar(15) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [CurrencyRateID] int NULL,
+    [SubTotal] money NOT NULL DEFAULT((0.00)),
+    [TaxAmt] money NOT NULL DEFAULT((0.00)),
+    [Freight] money NOT NULL DEFAULT((0.00)),
+    [TotalDue] AS (isnull(([SubTotal]+[TaxAmt])+[Freight],(0))),
+    [Comment] nvarchar(128) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_SalesOrderHeader_SalesOrderID] PRIMARY KEY ([SalesOrderID] ASC)
 )
 
-alter table [Sales].[SalesOrderHeader] with check add constraint [FK_SalesOrderHeader_SalesPerson_SalesPersonID] foreign key([SalesPersonID]) references [Sales].[SalesPerson] ([BusinessEntityID]) alter table [Sales].[SalesOrderHeader] check constraint [FK_SalesOrderHeader_SalesPerson_SalesPersonID]
-alter table [Sales].[SalesOrderHeader] with check add constraint [FK_SalesOrderHeader_SalesTerritory_TerritoryID] foreign key([TerritoryID]) references [Sales].[SalesTerritory] ([TerritoryID]) alter table [Sales].[SalesOrderHeader] check constraint [FK_SalesOrderHeader_SalesTerritory_TerritoryID]
-alter table [Purchasing].[SalesOrderHeader] with check add constraint [FK_SalesOrderHeader_ShipMethod_ShipMethodID] foreign key([ShipMethodID]) references [Purchasing].[ShipMethod] ([ShipMethodID]) alter table [Purchasing].[SalesOrderHeader] check constraint [FK_SalesOrderHeader_ShipMethod_ShipMethodID]
-alter table [Person].[SalesOrderHeader] with check add constraint [FK_SalesOrderHeader_Address_BillToAddressID] foreign key([BillToAddressID]) references [Person].[Address] ([AddressID]) alter table [Person].[SalesOrderHeader] check constraint [FK_SalesOrderHeader_Address_BillToAddressID]
-alter table [Person].[SalesOrderHeader] with check add constraint [FK_SalesOrderHeader_Address_ShipToAddressID] foreign key([ShipToAddressID]) references [Person].[Address] ([AddressID]) alter table [Person].[SalesOrderHeader] check constraint [FK_SalesOrderHeader_Address_ShipToAddressID]
-alter table [Sales].[SalesOrderHeader] with check add constraint [FK_SalesOrderHeader_CreditCard_CreditCardID] foreign key([CreditCardID]) references [Sales].[CreditCard] ([CreditCardID]) alter table [Sales].[SalesOrderHeader] check constraint [FK_SalesOrderHeader_CreditCard_CreditCardID]
-alter table [Sales].[SalesOrderHeader] with check add constraint [FK_SalesOrderHeader_CurrencyRate_CurrencyRateID] foreign key([CurrencyRateID]) references [Sales].[CurrencyRate] ([CurrencyRateID]) alter table [Sales].[SalesOrderHeader] check constraint [FK_SalesOrderHeader_CurrencyRate_CurrencyRateID]
-alter table [Sales].[SalesOrderHeader] with check add constraint [FK_SalesOrderHeader_Customer_CustomerID] foreign key([CustomerID]) references [Sales].[Customer] ([CustomerID]) alter table [Sales].[SalesOrderHeader] check constraint [FK_SalesOrderHeader_Customer_CustomerID]
+ALTER TABLE [Sales].[SalesOrderHeader] WITH CHECK ADD CONSTRAINT [FK_SalesOrderHeader_SalesPerson_SalesPersonID] FOREIGN KEY ([SalesPersonID]) REFERENCES [Sales].[SalesPerson] ([BusinessEntityID])
+ALTER TABLE [Sales].[SalesOrderHeader] CHECK CONSTRAINT [FK_SalesOrderHeader_SalesPerson_SalesPersonID]
+ALTER TABLE [Sales].[SalesOrderHeader] WITH CHECK ADD CONSTRAINT [FK_SalesOrderHeader_SalesTerritory_TerritoryID] FOREIGN KEY ([TerritoryID]) REFERENCES [Sales].[SalesTerritory] ([TerritoryID])
+ALTER TABLE [Sales].[SalesOrderHeader] CHECK CONSTRAINT [FK_SalesOrderHeader_SalesTerritory_TerritoryID]
+ALTER TABLE [Purchasing].[SalesOrderHeader] WITH CHECK ADD CONSTRAINT [FK_SalesOrderHeader_ShipMethod_ShipMethodID] FOREIGN KEY ([ShipMethodID]) REFERENCES [Purchasing].[ShipMethod] ([ShipMethodID])
+ALTER TABLE [Purchasing].[SalesOrderHeader] CHECK CONSTRAINT [FK_SalesOrderHeader_ShipMethod_ShipMethodID]
+ALTER TABLE [Person].[SalesOrderHeader] WITH CHECK ADD CONSTRAINT [FK_SalesOrderHeader_Address_BillToAddressID] FOREIGN KEY ([BillToAddressID]) REFERENCES [Person].[Address] ([AddressID])
+ALTER TABLE [Person].[SalesOrderHeader] CHECK CONSTRAINT [FK_SalesOrderHeader_Address_BillToAddressID]
+ALTER TABLE [Person].[SalesOrderHeader] WITH CHECK ADD CONSTRAINT [FK_SalesOrderHeader_Address_ShipToAddressID] FOREIGN KEY ([ShipToAddressID]) REFERENCES [Person].[Address] ([AddressID])
+ALTER TABLE [Person].[SalesOrderHeader] CHECK CONSTRAINT [FK_SalesOrderHeader_Address_ShipToAddressID]
+ALTER TABLE [Sales].[SalesOrderHeader] WITH CHECK ADD CONSTRAINT [FK_SalesOrderHeader_CreditCard_CreditCardID] FOREIGN KEY ([CreditCardID]) REFERENCES [Sales].[CreditCard] ([CreditCardID])
+ALTER TABLE [Sales].[SalesOrderHeader] CHECK CONSTRAINT [FK_SalesOrderHeader_CreditCard_CreditCardID]
+ALTER TABLE [Sales].[SalesOrderHeader] WITH CHECK ADD CONSTRAINT [FK_SalesOrderHeader_CurrencyRate_CurrencyRateID] FOREIGN KEY ([CurrencyRateID]) REFERENCES [Sales].[CurrencyRate] ([CurrencyRateID])
+ALTER TABLE [Sales].[SalesOrderHeader] CHECK CONSTRAINT [FK_SalesOrderHeader_CurrencyRate_CurrencyRateID]
+ALTER TABLE [Sales].[SalesOrderHeader] WITH CHECK ADD CONSTRAINT [FK_SalesOrderHeader_Customer_CustomerID] FOREIGN KEY ([CustomerID]) REFERENCES [Sales].[Customer] ([CustomerID])
+ALTER TABLE [Sales].[SalesOrderHeader] CHECK CONSTRAINT [FK_SalesOrderHeader_Customer_CustomerID]
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[SalesOrderHeader]') AND name = 'AK_SalesOrderHeader_rowguid')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_SalesOrderHeader_rowguid] ON [Sales].[SalesOrderHeader]([rowguid] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[SalesOrderHeader]') and name = 'AK_SalesOrderHeader_rowguid')
-create unique nonclustered index [AK_SalesOrderHeader_rowguid] on [Sales].[SalesOrderHeader]([rowguid] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[SalesOrderHeader]') AND name = 'AK_SalesOrderHeader_SalesOrderNumber')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_SalesOrderHeader_SalesOrderNumber] ON [Sales].[SalesOrderHeader]([SalesOrderNumber] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[SalesOrderHeader]') and name = 'AK_SalesOrderHeader_SalesOrderNumber')
-create unique nonclustered index [AK_SalesOrderHeader_SalesOrderNumber] on [Sales].[SalesOrderHeader]([SalesOrderNumber] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[SalesOrderHeader]') AND name = 'IX_SalesOrderHeader_CustomerID')
+CREATE NONCLUSTERED INDEX [IX_SalesOrderHeader_CustomerID] ON [Sales].[SalesOrderHeader]([CustomerID] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[SalesOrderHeader]') and name = 'IX_SalesOrderHeader_CustomerID')
-create nonclustered index [IX_SalesOrderHeader_CustomerID] on [Sales].[SalesOrderHeader]([CustomerID] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[SalesOrderHeader]') and name = 'IX_SalesOrderHeader_SalesPersonID')
-create nonclustered index [IX_SalesOrderHeader_SalesPersonID] on [Sales].[SalesOrderHeader]([SalesPersonID] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[SalesOrderHeader]') AND name = 'IX_SalesOrderHeader_SalesPersonID')
+CREATE NONCLUSTERED INDEX [IX_SalesOrderHeader_SalesPersonID] ON [Sales].[SalesOrderHeader]([SalesPersonID] ASC)

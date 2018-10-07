@@ -1,15 +1,18 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[ProductModelProductDescriptionCulture]') and type = 'U')
-create table [Production].[ProductModelProductDescriptionCulture]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[ProductModelProductDescriptionCulture]') AND type = 'U')
+CREATE TABLE [Production].[ProductModelProductDescriptionCulture]
 (
-    [ProductModelID] int not null,
-    [ProductDescriptionID] int not null,
-    [CultureID] nchar(6) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID] primary key ([ProductModelID] asc)
-    constraint [PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID] primary key ([ProductDescriptionID] asc)
-    constraint [PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID] primary key ([CultureID] asc)
+    [ProductModelID] int NOT NULL,
+    [ProductDescriptionID] int NOT NULL,
+    [CultureID] nchar(6) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID] PRIMARY KEY ([ProductModelID] ASC)
+    CONSTRAINT [PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID] PRIMARY KEY ([ProductDescriptionID] ASC)
+    CONSTRAINT [PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID] PRIMARY KEY ([CultureID] ASC)
 )
 
-alter table [Production].[ProductModelProductDescriptionCulture] with check add constraint [FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID] foreign key([ProductDescriptionID]) references [Production].[ProductDescription] ([ProductDescriptionID]) alter table [Production].[ProductModelProductDescriptionCulture] check constraint [FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID]
-alter table [Production].[ProductModelProductDescriptionCulture] with check add constraint [FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID] foreign key([ProductModelID]) references [Production].[ProductModel] ([ProductModelID]) alter table [Production].[ProductModelProductDescriptionCulture] check constraint [FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID]
-alter table [Production].[ProductModelProductDescriptionCulture] with check add constraint [FK_ProductModelProductDescriptionCulture_Culture_CultureID] foreign key([CultureID]) references [Production].[Culture] ([CultureID]) alter table [Production].[ProductModelProductDescriptionCulture] check constraint [FK_ProductModelProductDescriptionCulture_Culture_CultureID]
+ALTER TABLE [Production].[ProductModelProductDescriptionCulture] WITH CHECK ADD CONSTRAINT [FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID] FOREIGN KEY ([ProductDescriptionID]) REFERENCES [Production].[ProductDescription] ([ProductDescriptionID])
+ALTER TABLE [Production].[ProductModelProductDescriptionCulture] CHECK CONSTRAINT [FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID]
+ALTER TABLE [Production].[ProductModelProductDescriptionCulture] WITH CHECK ADD CONSTRAINT [FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID] FOREIGN KEY ([ProductModelID]) REFERENCES [Production].[ProductModel] ([ProductModelID])
+ALTER TABLE [Production].[ProductModelProductDescriptionCulture] CHECK CONSTRAINT [FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID]
+ALTER TABLE [Production].[ProductModelProductDescriptionCulture] WITH CHECK ADD CONSTRAINT [FK_ProductModelProductDescriptionCulture_Culture_CultureID] FOREIGN KEY ([CultureID]) REFERENCES [Production].[Culture] ([CultureID])
+ALTER TABLE [Production].[ProductModelProductDescriptionCulture] CHECK CONSTRAINT [FK_ProductModelProductDescriptionCulture_Culture_CultureID]

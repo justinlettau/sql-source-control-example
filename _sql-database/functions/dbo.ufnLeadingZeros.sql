@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[dbo].[ufnLeadingZeros]') and type = 'FN')
-drop function [dbo].[ufnLeadingZeros]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[dbo].[ufnLeadingZeros]') AND type = 'FN')
+DROP FUNCTION [dbo].[ufnLeadingZeros]
+GO
 
 CREATE FUNCTION [dbo].[ufnLeadingZeros](
     @Value int

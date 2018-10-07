@@ -1,8 +1,8 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[Illustration]') and type = 'U')
-create table [Production].[Illustration]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[Illustration]') AND type = 'U')
+CREATE TABLE [Production].[Illustration]
 (
-    [IllustrationID] int not null identity(1, 1),
-    [Diagram] xml null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_Illustration_IllustrationID] primary key ([IllustrationID] asc)
+    [IllustrationID] int NOT NULL IDENTITY(1, 1),
+    [Diagram] xml NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_Illustration_IllustrationID] PRIMARY KEY ([IllustrationID] ASC)
 )

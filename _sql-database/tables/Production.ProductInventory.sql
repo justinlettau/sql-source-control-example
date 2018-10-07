@@ -1,16 +1,18 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[ProductInventory]') and type = 'U')
-create table [Production].[ProductInventory]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[ProductInventory]') AND type = 'U')
+CREATE TABLE [Production].[ProductInventory]
 (
-    [ProductID] int not null,
-    [LocationID] smallint not null,
-    [Shelf] nvarchar(10) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [Bin] tinyint not null,
-    [Quantity] smallint not null default((0)),
-    [rowguid] uniqueidentifier not null default(newid()),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_ProductInventory_ProductID_LocationID] primary key ([ProductID] asc)
-    constraint [PK_ProductInventory_ProductID_LocationID] primary key ([LocationID] asc)
+    [ProductID] int NOT NULL,
+    [LocationID] smallint NOT NULL,
+    [Shelf] nvarchar(10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Bin] tinyint NOT NULL,
+    [Quantity] smallint NOT NULL DEFAULT((0)),
+    [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_ProductInventory_ProductID_LocationID] PRIMARY KEY ([ProductID] ASC)
+    CONSTRAINT [PK_ProductInventory_ProductID_LocationID] PRIMARY KEY ([LocationID] ASC)
 )
 
-alter table [Production].[ProductInventory] with check add constraint [FK_ProductInventory_Location_LocationID] foreign key([LocationID]) references [Production].[Location] ([LocationID]) alter table [Production].[ProductInventory] check constraint [FK_ProductInventory_Location_LocationID]
-alter table [Production].[ProductInventory] with check add constraint [FK_ProductInventory_Product_ProductID] foreign key([ProductID]) references [Production].[Product] ([ProductID]) alter table [Production].[ProductInventory] check constraint [FK_ProductInventory_Product_ProductID]
+ALTER TABLE [Production].[ProductInventory] WITH CHECK ADD CONSTRAINT [FK_ProductInventory_Location_LocationID] FOREIGN KEY ([LocationID]) REFERENCES [Production].[Location] ([LocationID])
+ALTER TABLE [Production].[ProductInventory] CHECK CONSTRAINT [FK_ProductInventory_Location_LocationID]
+ALTER TABLE [Production].[ProductInventory] WITH CHECK ADD CONSTRAINT [FK_ProductInventory_Product_ProductID] FOREIGN KEY ([ProductID]) REFERENCES [Production].[Product] ([ProductID])
+ALTER TABLE [Production].[ProductInventory] CHECK CONSTRAINT [FK_ProductInventory_Product_ProductID]

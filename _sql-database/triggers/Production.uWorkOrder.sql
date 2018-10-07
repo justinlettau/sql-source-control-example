@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[Production].[uWorkOrder]') and type = 'TR')
-drop trigger [Production].[uWorkOrder]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[uWorkOrder]') AND type = 'TR')
+DROP TRIGGER [Production].[uWorkOrder]
+GO
 
 CREATE TRIGGER [Production].[uWorkOrder] ON [Production].[WorkOrder] 
 AFTER UPDATE AS 

@@ -1,29 +1,31 @@
-if not exists (select * from sys.objects where object_id = object_id('[Purchasing].[PurchaseOrderHeader]') and type = 'U')
-create table [Purchasing].[PurchaseOrderHeader]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Purchasing].[PurchaseOrderHeader]') AND type = 'U')
+CREATE TABLE [Purchasing].[PurchaseOrderHeader]
 (
-    [PurchaseOrderID] int not null identity(1, 1),
-    [RevisionNumber] tinyint not null default((0)),
-    [Status] tinyint not null default((1)),
-    [EmployeeID] int not null,
-    [VendorID] int not null,
-    [ShipMethodID] int not null,
-    [OrderDate] datetime not null default(getdate()),
-    [ShipDate] datetime null,
-    [SubTotal] money not null default((0.00)),
-    [TaxAmt] money not null default((0.00)),
-    [Freight] money not null default((0.00)),
-    [TotalDue] as (isnull(([SubTotal]+[TaxAmt])+[Freight],(0))),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_PurchaseOrderHeader_PurchaseOrderID] primary key ([PurchaseOrderID] asc)
+    [PurchaseOrderID] int NOT NULL IDENTITY(1, 1),
+    [RevisionNumber] tinyint NOT NULL DEFAULT((0)),
+    [Status] tinyint NOT NULL DEFAULT((1)),
+    [EmployeeID] int NOT NULL,
+    [VendorID] int NOT NULL,
+    [ShipMethodID] int NOT NULL,
+    [OrderDate] datetime NOT NULL DEFAULT(getdate()),
+    [ShipDate] datetime NULL,
+    [SubTotal] money NOT NULL DEFAULT((0.00)),
+    [TaxAmt] money NOT NULL DEFAULT((0.00)),
+    [Freight] money NOT NULL DEFAULT((0.00)),
+    [TotalDue] AS (isnull(([SubTotal]+[TaxAmt])+[Freight],(0))),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_PurchaseOrderHeader_PurchaseOrderID] PRIMARY KEY ([PurchaseOrderID] ASC)
 )
 
-alter table [Purchasing].[PurchaseOrderHeader] with check add constraint [FK_PurchaseOrderHeader_ShipMethod_ShipMethodID] foreign key([ShipMethodID]) references [Purchasing].[ShipMethod] ([ShipMethodID]) alter table [Purchasing].[PurchaseOrderHeader] check constraint [FK_PurchaseOrderHeader_ShipMethod_ShipMethodID]
-alter table [Purchasing].[PurchaseOrderHeader] with check add constraint [FK_PurchaseOrderHeader_Vendor_VendorID] foreign key([VendorID]) references [Purchasing].[Vendor] ([BusinessEntityID]) alter table [Purchasing].[PurchaseOrderHeader] check constraint [FK_PurchaseOrderHeader_Vendor_VendorID]
-alter table [HumanResources].[PurchaseOrderHeader] with check add constraint [FK_PurchaseOrderHeader_Employee_EmployeeID] foreign key([EmployeeID]) references [HumanResources].[Employee] ([BusinessEntityID]) alter table [HumanResources].[PurchaseOrderHeader] check constraint [FK_PurchaseOrderHeader_Employee_EmployeeID]
+ALTER TABLE [Purchasing].[PurchaseOrderHeader] WITH CHECK ADD CONSTRAINT [FK_PurchaseOrderHeader_ShipMethod_ShipMethodID] FOREIGN KEY ([ShipMethodID]) REFERENCES [Purchasing].[ShipMethod] ([ShipMethodID])
+ALTER TABLE [Purchasing].[PurchaseOrderHeader] CHECK CONSTRAINT [FK_PurchaseOrderHeader_ShipMethod_ShipMethodID]
+ALTER TABLE [Purchasing].[PurchaseOrderHeader] WITH CHECK ADD CONSTRAINT [FK_PurchaseOrderHeader_Vendor_VendorID] FOREIGN KEY ([VendorID]) REFERENCES [Purchasing].[Vendor] ([BusinessEntityID])
+ALTER TABLE [Purchasing].[PurchaseOrderHeader] CHECK CONSTRAINT [FK_PurchaseOrderHeader_Vendor_VendorID]
+ALTER TABLE [HumanResources].[PurchaseOrderHeader] WITH CHECK ADD CONSTRAINT [FK_PurchaseOrderHeader_Employee_EmployeeID] FOREIGN KEY ([EmployeeID]) REFERENCES [HumanResources].[Employee] ([BusinessEntityID])
+ALTER TABLE [HumanResources].[PurchaseOrderHeader] CHECK CONSTRAINT [FK_PurchaseOrderHeader_Employee_EmployeeID]
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Purchasing].[PurchaseOrderHeader]') AND name = 'IX_PurchaseOrderHeader_VendorID')
+CREATE NONCLUSTERED INDEX [IX_PurchaseOrderHeader_VendorID] ON [Purchasing].[PurchaseOrderHeader]([VendorID] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Purchasing].[PurchaseOrderHeader]') and name = 'IX_PurchaseOrderHeader_VendorID')
-create nonclustered index [IX_PurchaseOrderHeader_VendorID] on [Purchasing].[PurchaseOrderHeader]([VendorID] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Purchasing].[PurchaseOrderHeader]') and name = 'IX_PurchaseOrderHeader_EmployeeID')
-create nonclustered index [IX_PurchaseOrderHeader_EmployeeID] on [Purchasing].[PurchaseOrderHeader]([EmployeeID] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Purchasing].[PurchaseOrderHeader]') AND name = 'IX_PurchaseOrderHeader_EmployeeID')
+CREATE NONCLUSTERED INDEX [IX_PurchaseOrderHeader_EmployeeID] ON [Purchasing].[PurchaseOrderHeader]([EmployeeID] ASC)

@@ -1,13 +1,11 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[ScrapReason]') and type = 'U')
-create table [Production].[ScrapReason]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[ScrapReason]') AND type = 'U')
+CREATE TABLE [Production].[ScrapReason]
 (
-    [ScrapReasonID] smallint not null identity(1, 1),
-    [Name] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_ScrapReason_ScrapReasonID] primary key ([ScrapReasonID] asc)
+    [ScrapReasonID] smallint NOT NULL IDENTITY(1, 1),
+    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_ScrapReason_ScrapReasonID] PRIMARY KEY ([ScrapReasonID] ASC)
 )
 
-
-
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[ScrapReason]') and name = 'AK_ScrapReason_Name')
-create unique nonclustered index [AK_ScrapReason_Name] on [Production].[ScrapReason]([Name] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[ScrapReason]') AND name = 'AK_ScrapReason_Name')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_ScrapReason_Name] ON [Production].[ScrapReason]([Name] ASC)

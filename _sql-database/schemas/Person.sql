@@ -1,2 +1,2 @@
-if not exists (select * from sys.schemas where name = 'Person')
-exec('create schema Person')
+IF NOT EXISTS (SELECT 1 FROM sys.schemas WHERE name = 'Person')
+EXEC('CREATE SCHEMA Person')

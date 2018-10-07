@@ -1,14 +1,12 @@
-if not exists (select * from sys.objects where object_id = object_id('[HumanResources].[Department]') and type = 'U')
-create table [HumanResources].[Department]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[HumanResources].[Department]') AND type = 'U')
+CREATE TABLE [HumanResources].[Department]
 (
-    [DepartmentID] smallint not null identity(1, 1),
-    [Name] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [GroupName] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_Department_DepartmentID] primary key ([DepartmentID] asc)
+    [DepartmentID] smallint NOT NULL IDENTITY(1, 1),
+    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [GroupName] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_Department_DepartmentID] PRIMARY KEY ([DepartmentID] ASC)
 )
 
-
-
-if not exists (select * from sys.indexes where object_id = object_id('[HumanResources].[Department]') and name = 'AK_Department_Name')
-create unique nonclustered index [AK_Department_Name] on [HumanResources].[Department]([Name] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[HumanResources].[Department]') AND name = 'AK_Department_Name')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Department_Name] ON [HumanResources].[Department]([Name] ASC)

@@ -1,13 +1,11 @@
-if not exists (select * from sys.objects where object_id = object_id('[Person].[ContactType]') and type = 'U')
-create table [Person].[ContactType]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Person].[ContactType]') AND type = 'U')
+CREATE TABLE [Person].[ContactType]
 (
-    [ContactTypeID] int not null identity(1, 1),
-    [Name] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_ContactType_ContactTypeID] primary key ([ContactTypeID] asc)
+    [ContactTypeID] int NOT NULL IDENTITY(1, 1),
+    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_ContactType_ContactTypeID] PRIMARY KEY ([ContactTypeID] ASC)
 )
 
-
-
-if not exists (select * from sys.indexes where object_id = object_id('[Person].[ContactType]') and name = 'AK_ContactType_Name')
-create unique nonclustered index [AK_ContactType_Name] on [Person].[ContactType]([Name] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[ContactType]') AND name = 'AK_ContactType_Name')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_ContactType_Name] ON [Person].[ContactType]([Name] ASC)

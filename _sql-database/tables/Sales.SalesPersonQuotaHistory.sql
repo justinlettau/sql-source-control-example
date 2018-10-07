@@ -1,17 +1,17 @@
-if not exists (select * from sys.objects where object_id = object_id('[Sales].[SalesPersonQuotaHistory]') and type = 'U')
-create table [Sales].[SalesPersonQuotaHistory]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Sales].[SalesPersonQuotaHistory]') AND type = 'U')
+CREATE TABLE [Sales].[SalesPersonQuotaHistory]
 (
-    [BusinessEntityID] int not null,
-    [QuotaDate] datetime not null,
-    [SalesQuota] money not null,
-    [rowguid] uniqueidentifier not null default(newid()),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_SalesPersonQuotaHistory_BusinessEntityID_QuotaDate] primary key ([BusinessEntityID] asc)
-    constraint [PK_SalesPersonQuotaHistory_BusinessEntityID_QuotaDate] primary key ([QuotaDate] asc)
+    [BusinessEntityID] int NOT NULL,
+    [QuotaDate] datetime NOT NULL,
+    [SalesQuota] money NOT NULL,
+    [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_SalesPersonQuotaHistory_BusinessEntityID_QuotaDate] PRIMARY KEY ([BusinessEntityID] ASC)
+    CONSTRAINT [PK_SalesPersonQuotaHistory_BusinessEntityID_QuotaDate] PRIMARY KEY ([QuotaDate] ASC)
 )
 
-alter table [Sales].[SalesPersonQuotaHistory] with check add constraint [FK_SalesPersonQuotaHistory_SalesPerson_BusinessEntityID] foreign key([BusinessEntityID]) references [Sales].[SalesPerson] ([BusinessEntityID]) alter table [Sales].[SalesPersonQuotaHistory] check constraint [FK_SalesPersonQuotaHistory_SalesPerson_BusinessEntityID]
+ALTER TABLE [Sales].[SalesPersonQuotaHistory] WITH CHECK ADD CONSTRAINT [FK_SalesPersonQuotaHistory_SalesPerson_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [Sales].[SalesPerson] ([BusinessEntityID])
+ALTER TABLE [Sales].[SalesPersonQuotaHistory] CHECK CONSTRAINT [FK_SalesPersonQuotaHistory_SalesPerson_BusinessEntityID]
 
-
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[SalesPersonQuotaHistory]') and name = 'AK_SalesPersonQuotaHistory_rowguid')
-create unique nonclustered index [AK_SalesPersonQuotaHistory_rowguid] on [Sales].[SalesPersonQuotaHistory]([rowguid] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[SalesPersonQuotaHistory]') AND name = 'AK_SalesPersonQuotaHistory_rowguid')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_SalesPersonQuotaHistory_rowguid] ON [Sales].[SalesPersonQuotaHistory]([rowguid] ASC)

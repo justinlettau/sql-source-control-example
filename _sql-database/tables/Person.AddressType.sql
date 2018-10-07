@@ -1,17 +1,15 @@
-if not exists (select * from sys.objects where object_id = object_id('[Person].[AddressType]') and type = 'U')
-create table [Person].[AddressType]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Person].[AddressType]') AND type = 'U')
+CREATE TABLE [Person].[AddressType]
 (
-    [AddressTypeID] int not null identity(1, 1),
-    [Name] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [rowguid] uniqueidentifier not null default(newid()),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_AddressType_AddressTypeID] primary key ([AddressTypeID] asc)
+    [AddressTypeID] int NOT NULL IDENTITY(1, 1),
+    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_AddressType_AddressTypeID] PRIMARY KEY ([AddressTypeID] ASC)
 )
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[AddressType]') AND name = 'AK_AddressType_rowguid')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_AddressType_rowguid] ON [Person].[AddressType]([rowguid] ASC)
 
-
-if not exists (select * from sys.indexes where object_id = object_id('[Person].[AddressType]') and name = 'AK_AddressType_rowguid')
-create unique nonclustered index [AK_AddressType_rowguid] on [Person].[AddressType]([rowguid] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Person].[AddressType]') and name = 'AK_AddressType_Name')
-create unique nonclustered index [AK_AddressType_Name] on [Person].[AddressType]([Name] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[AddressType]') AND name = 'AK_AddressType_Name')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_AddressType_Name] ON [Person].[AddressType]([Name] ASC)

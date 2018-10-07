@@ -1,19 +1,19 @@
-if not exists (select * from sys.objects where object_id = object_id('[Purchasing].[Vendor]') and type = 'U')
-create table [Purchasing].[Vendor]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Purchasing].[Vendor]') AND type = 'U')
+CREATE TABLE [Purchasing].[Vendor]
 (
-    [BusinessEntityID] int not null,
-    [AccountNumber] AccountNumber collate SQL_Latin1_General_CP1_CI_AS not null,
-    [Name] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [CreditRating] tinyint not null,
-    [PreferredVendorStatus] Flag not null default((1)),
-    [ActiveFlag] Flag not null default((1)),
-    [PurchasingWebServiceURL] nvarchar(1024) collate SQL_Latin1_General_CP1_CI_AS null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_Vendor_BusinessEntityID] primary key ([BusinessEntityID] asc)
+    [BusinessEntityID] int NOT NULL,
+    [AccountNumber] AccountNumber COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [CreditRating] tinyint NOT NULL,
+    [PreferredVendorStatus] Flag NOT NULL DEFAULT((1)),
+    [ActiveFlag] Flag NOT NULL DEFAULT((1)),
+    [PurchasingWebServiceURL] nvarchar(1024) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_Vendor_BusinessEntityID] PRIMARY KEY ([BusinessEntityID] ASC)
 )
 
-alter table [Person].[Vendor] with check add constraint [FK_Vendor_BusinessEntity_BusinessEntityID] foreign key([BusinessEntityID]) references [Person].[BusinessEntity] ([BusinessEntityID]) alter table [Person].[Vendor] check constraint [FK_Vendor_BusinessEntity_BusinessEntityID]
+ALTER TABLE [Person].[Vendor] WITH CHECK ADD CONSTRAINT [FK_Vendor_BusinessEntity_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [Person].[BusinessEntity] ([BusinessEntityID])
+ALTER TABLE [Person].[Vendor] CHECK CONSTRAINT [FK_Vendor_BusinessEntity_BusinessEntityID]
 
-
-if not exists (select * from sys.indexes where object_id = object_id('[Purchasing].[Vendor]') and name = 'AK_Vendor_AccountNumber')
-create unique nonclustered index [AK_Vendor_AccountNumber] on [Purchasing].[Vendor]([AccountNumber] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Purchasing].[Vendor]') AND name = 'AK_Vendor_AccountNumber')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Vendor_AccountNumber] ON [Purchasing].[Vendor]([AccountNumber] ASC)

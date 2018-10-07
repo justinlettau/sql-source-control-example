@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[Person].[vStateProvinceCountryRegion]') and type = 'V')
-drop view [Person].[vStateProvinceCountryRegion]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Person].[vStateProvinceCountryRegion]') AND type = 'V')
+DROP VIEW [Person].[vStateProvinceCountryRegion]
+GO
 
 CREATE VIEW [Person].[vStateProvinceCountryRegion] 
 WITH SCHEMABINDING 

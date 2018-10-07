@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[Purchasing].[dVendor]') and type = 'TR')
-drop trigger [Purchasing].[dVendor]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Purchasing].[dVendor]') AND type = 'TR')
+DROP TRIGGER [Purchasing].[dVendor]
+GO
 
 CREATE TRIGGER [Purchasing].[dVendor] ON [Purchasing].[Vendor] 
 INSTEAD OF DELETE NOT FOR REPLICATION AS 

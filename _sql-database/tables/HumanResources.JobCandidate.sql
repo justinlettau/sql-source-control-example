@@ -1,15 +1,15 @@
-if not exists (select * from sys.objects where object_id = object_id('[HumanResources].[JobCandidate]') and type = 'U')
-create table [HumanResources].[JobCandidate]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[HumanResources].[JobCandidate]') AND type = 'U')
+CREATE TABLE [HumanResources].[JobCandidate]
 (
-    [JobCandidateID] int not null identity(1, 1),
-    [BusinessEntityID] int null,
-    [Resume] xml null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_JobCandidate_JobCandidateID] primary key ([JobCandidateID] asc)
+    [JobCandidateID] int NOT NULL IDENTITY(1, 1),
+    [BusinessEntityID] int NULL,
+    [Resume] xml NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_JobCandidate_JobCandidateID] PRIMARY KEY ([JobCandidateID] ASC)
 )
 
-alter table [HumanResources].[JobCandidate] with check add constraint [FK_JobCandidate_Employee_BusinessEntityID] foreign key([BusinessEntityID]) references [HumanResources].[Employee] ([BusinessEntityID]) alter table [HumanResources].[JobCandidate] check constraint [FK_JobCandidate_Employee_BusinessEntityID]
+ALTER TABLE [HumanResources].[JobCandidate] WITH CHECK ADD CONSTRAINT [FK_JobCandidate_Employee_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [HumanResources].[Employee] ([BusinessEntityID])
+ALTER TABLE [HumanResources].[JobCandidate] CHECK CONSTRAINT [FK_JobCandidate_Employee_BusinessEntityID]
 
-
-if not exists (select * from sys.indexes where object_id = object_id('[HumanResources].[JobCandidate]') and name = 'IX_JobCandidate_BusinessEntityID')
-create nonclustered index [IX_JobCandidate_BusinessEntityID] on [HumanResources].[JobCandidate]([BusinessEntityID] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[HumanResources].[JobCandidate]') AND name = 'IX_JobCandidate_BusinessEntityID')
+CREATE NONCLUSTERED INDEX [IX_JobCandidate_BusinessEntityID] ON [HumanResources].[JobCandidate]([BusinessEntityID] ASC)

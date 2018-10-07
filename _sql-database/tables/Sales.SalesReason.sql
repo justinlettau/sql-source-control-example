@@ -1,9 +1,9 @@
-if not exists (select * from sys.objects where object_id = object_id('[Sales].[SalesReason]') and type = 'U')
-create table [Sales].[SalesReason]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Sales].[SalesReason]') AND type = 'U')
+CREATE TABLE [Sales].[SalesReason]
 (
-    [SalesReasonID] int not null identity(1, 1),
-    [Name] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [ReasonType] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_SalesReason_SalesReasonID] primary key ([SalesReasonID] asc)
+    [SalesReasonID] int NOT NULL IDENTITY(1, 1),
+    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [ReasonType] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_SalesReason_SalesReasonID] PRIMARY KEY ([SalesReasonID] ASC)
 )

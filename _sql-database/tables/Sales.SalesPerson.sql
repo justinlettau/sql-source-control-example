@@ -1,21 +1,22 @@
-if not exists (select * from sys.objects where object_id = object_id('[Sales].[SalesPerson]') and type = 'U')
-create table [Sales].[SalesPerson]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Sales].[SalesPerson]') AND type = 'U')
+CREATE TABLE [Sales].[SalesPerson]
 (
-    [BusinessEntityID] int not null,
-    [TerritoryID] int null,
-    [SalesQuota] money null,
-    [Bonus] money not null default((0.00)),
-    [CommissionPct] smallmoney not null default((0.00)),
-    [SalesYTD] money not null default((0.00)),
-    [SalesLastYear] money not null default((0.00)),
-    [rowguid] uniqueidentifier not null default(newid()),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_SalesPerson_BusinessEntityID] primary key ([BusinessEntityID] asc)
+    [BusinessEntityID] int NOT NULL,
+    [TerritoryID] int NULL,
+    [SalesQuota] money NULL,
+    [Bonus] money NOT NULL DEFAULT((0.00)),
+    [CommissionPct] smallmoney NOT NULL DEFAULT((0.00)),
+    [SalesYTD] money NOT NULL DEFAULT((0.00)),
+    [SalesLastYear] money NOT NULL DEFAULT((0.00)),
+    [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_SalesPerson_BusinessEntityID] PRIMARY KEY ([BusinessEntityID] ASC)
 )
 
-alter table [Sales].[SalesPerson] with check add constraint [FK_SalesPerson_SalesTerritory_TerritoryID] foreign key([TerritoryID]) references [Sales].[SalesTerritory] ([TerritoryID]) alter table [Sales].[SalesPerson] check constraint [FK_SalesPerson_SalesTerritory_TerritoryID]
-alter table [HumanResources].[SalesPerson] with check add constraint [FK_SalesPerson_Employee_BusinessEntityID] foreign key([BusinessEntityID]) references [HumanResources].[Employee] ([BusinessEntityID]) alter table [HumanResources].[SalesPerson] check constraint [FK_SalesPerson_Employee_BusinessEntityID]
+ALTER TABLE [Sales].[SalesPerson] WITH CHECK ADD CONSTRAINT [FK_SalesPerson_SalesTerritory_TerritoryID] FOREIGN KEY ([TerritoryID]) REFERENCES [Sales].[SalesTerritory] ([TerritoryID])
+ALTER TABLE [Sales].[SalesPerson] CHECK CONSTRAINT [FK_SalesPerson_SalesTerritory_TerritoryID]
+ALTER TABLE [HumanResources].[SalesPerson] WITH CHECK ADD CONSTRAINT [FK_SalesPerson_Employee_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [HumanResources].[Employee] ([BusinessEntityID])
+ALTER TABLE [HumanResources].[SalesPerson] CHECK CONSTRAINT [FK_SalesPerson_Employee_BusinessEntityID]
 
-
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[SalesPerson]') and name = 'AK_SalesPerson_rowguid')
-create unique nonclustered index [AK_SalesPerson_rowguid] on [Sales].[SalesPerson]([rowguid] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[SalesPerson]') AND name = 'AK_SalesPerson_rowguid')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_SalesPerson_rowguid] ON [Sales].[SalesPerson]([rowguid] ASC)

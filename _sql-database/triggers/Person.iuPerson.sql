@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[Person].[iuPerson]') and type = 'TR')
-drop trigger [Person].[iuPerson]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Person].[iuPerson]') AND type = 'TR')
+DROP TRIGGER [Person].[iuPerson]
+GO
 
 CREATE TRIGGER [Person].[iuPerson] ON [Person].[Person] 
 AFTER INSERT, UPDATE NOT FOR REPLICATION AS 

@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[dbo].[uspPrintError]') and type = 'P')
-drop procedure [dbo].[uspPrintError]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[dbo].[uspPrintError]') AND type = 'P')
+DROP PROCEDURE [dbo].[uspPrintError]
+GO
 
 -- uspPrintError prints error information about the error that caused 
 -- execution to jump to the CATCH block of a TRY...CATCH construct. 

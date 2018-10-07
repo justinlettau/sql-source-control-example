@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[dbo].[uspLogError]') and type = 'P')
-drop procedure [dbo].[uspLogError]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[dbo].[uspLogError]') AND type = 'P')
+DROP PROCEDURE [dbo].[uspLogError]
+GO
 
 -- uspLogError logs error information in the ErrorLog table about the 
 -- error that caused execution to jump to the CATCH block of a 

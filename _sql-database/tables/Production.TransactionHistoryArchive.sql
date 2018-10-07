@@ -1,25 +1,23 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[TransactionHistoryArchive]') and type = 'U')
-create table [Production].[TransactionHistoryArchive]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[TransactionHistoryArchive]') AND type = 'U')
+CREATE TABLE [Production].[TransactionHistoryArchive]
 (
-    [TransactionID] int not null,
-    [ProductID] int not null,
-    [ReferenceOrderID] int not null,
-    [ReferenceOrderLineID] int not null default((0)),
-    [TransactionDate] datetime not null default(getdate()),
-    [TransactionType] nchar(1) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [Quantity] int not null,
-    [ActualCost] money not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_TransactionHistoryArchive_TransactionID] primary key ([TransactionID] asc)
+    [TransactionID] int NOT NULL,
+    [ProductID] int NOT NULL,
+    [ReferenceOrderID] int NOT NULL,
+    [ReferenceOrderLineID] int NOT NULL DEFAULT((0)),
+    [TransactionDate] datetime NOT NULL DEFAULT(getdate()),
+    [TransactionType] nchar(1) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Quantity] int NOT NULL,
+    [ActualCost] money NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_TransactionHistoryArchive_TransactionID] PRIMARY KEY ([TransactionID] ASC)
 )
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[TransactionHistoryArchive]') AND name = 'IX_TransactionHistoryArchive_ProductID')
+CREATE NONCLUSTERED INDEX [IX_TransactionHistoryArchive_ProductID] ON [Production].[TransactionHistoryArchive]([ProductID] ASC)
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[TransactionHistoryArchive]') AND name = 'IX_TransactionHistoryArchive_ReferenceOrderID_ReferenceOrderLineID')
+CREATE NONCLUSTERED INDEX [IX_TransactionHistoryArchive_ReferenceOrderID_ReferenceOrderLineID] ON [Production].[TransactionHistoryArchive]([ReferenceOrderID] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[TransactionHistoryArchive]') and name = 'IX_TransactionHistoryArchive_ProductID')
-create nonclustered index [IX_TransactionHistoryArchive_ProductID] on [Production].[TransactionHistoryArchive]([ProductID] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[TransactionHistoryArchive]') and name = 'IX_TransactionHistoryArchive_ReferenceOrderID_ReferenceOrderLineID')
-create nonclustered index [IX_TransactionHistoryArchive_ReferenceOrderID_ReferenceOrderLineID] on [Production].[TransactionHistoryArchive]([ReferenceOrderID] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[TransactionHistoryArchive]') and name = 'IX_TransactionHistoryArchive_ReferenceOrderID_ReferenceOrderLineID')
-create nonclustered index [IX_TransactionHistoryArchive_ReferenceOrderID_ReferenceOrderLineID] on [Production].[TransactionHistoryArchive]([ReferenceOrderLineID] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[TransactionHistoryArchive]') AND name = 'IX_TransactionHistoryArchive_ReferenceOrderID_ReferenceOrderLineID')
+CREATE NONCLUSTERED INDEX [IX_TransactionHistoryArchive_ReferenceOrderID_ReferenceOrderLineID] ON [Production].[TransactionHistoryArchive]([ReferenceOrderLineID] ASC)

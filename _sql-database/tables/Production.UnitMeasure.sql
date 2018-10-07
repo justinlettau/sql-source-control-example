@@ -1,13 +1,11 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[UnitMeasure]') and type = 'U')
-create table [Production].[UnitMeasure]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[UnitMeasure]') AND type = 'U')
+CREATE TABLE [Production].[UnitMeasure]
 (
-    [UnitMeasureCode] nchar(3) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [Name] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_UnitMeasure_UnitMeasureCode] primary key ([UnitMeasureCode] asc)
+    [UnitMeasureCode] nchar(3) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_UnitMeasure_UnitMeasureCode] PRIMARY KEY ([UnitMeasureCode] ASC)
 )
 
-
-
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[UnitMeasure]') and name = 'AK_UnitMeasure_Name')
-create unique nonclustered index [AK_UnitMeasure_Name] on [Production].[UnitMeasure]([Name] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[UnitMeasure]') AND name = 'AK_UnitMeasure_Name')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_UnitMeasure_Name] ON [Production].[UnitMeasure]([Name] ASC)

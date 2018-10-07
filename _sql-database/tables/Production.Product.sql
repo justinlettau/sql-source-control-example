@@ -1,45 +1,48 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[Product]') and type = 'U')
-create table [Production].[Product]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[Product]') AND type = 'U')
+CREATE TABLE [Production].[Product]
 (
-    [ProductID] int not null identity(1, 1),
-    [Name] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [ProductNumber] nvarchar(25) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [MakeFlag] Flag not null default((1)),
-    [FinishedGoodsFlag] Flag not null default((1)),
-    [Color] nvarchar(15) collate SQL_Latin1_General_CP1_CI_AS null,
-    [SafetyStockLevel] smallint not null,
-    [ReorderPoint] smallint not null,
-    [StandardCost] money not null,
-    [ListPrice] money not null,
-    [Size] nvarchar(5) collate SQL_Latin1_General_CP1_CI_AS null,
-    [SizeUnitMeasureCode] nchar(3) collate SQL_Latin1_General_CP1_CI_AS null,
-    [WeightUnitMeasureCode] nchar(3) collate SQL_Latin1_General_CP1_CI_AS null,
-    [Weight] decimal(8, 2) null,
-    [DaysToManufacture] int not null,
-    [ProductLine] nchar(2) collate SQL_Latin1_General_CP1_CI_AS null,
-    [Class] nchar(2) collate SQL_Latin1_General_CP1_CI_AS null,
-    [Style] nchar(2) collate SQL_Latin1_General_CP1_CI_AS null,
-    [ProductSubcategoryID] int null,
-    [ProductModelID] int null,
-    [SellStartDate] datetime not null,
-    [SellEndDate] datetime null,
-    [DiscontinuedDate] datetime null,
-    [rowguid] uniqueidentifier not null default(newid()),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_Product_ProductID] primary key ([ProductID] asc)
+    [ProductID] int NOT NULL IDENTITY(1, 1),
+    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [ProductNumber] nvarchar(25) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [MakeFlag] Flag NOT NULL DEFAULT((1)),
+    [FinishedGoodsFlag] Flag NOT NULL DEFAULT((1)),
+    [Color] nvarchar(15) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [SafetyStockLevel] smallint NOT NULL,
+    [ReorderPoint] smallint NOT NULL,
+    [StandardCost] money NOT NULL,
+    [ListPrice] money NOT NULL,
+    [Size] nvarchar(5) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [SizeUnitMeasureCode] nchar(3) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [WeightUnitMeasureCode] nchar(3) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [Weight] decimal(8, 2) NULL,
+    [DaysToManufacture] int NOT NULL,
+    [ProductLine] nchar(2) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [Class] nchar(2) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [Style] nchar(2) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [ProductSubcategoryID] int NULL,
+    [ProductModelID] int NULL,
+    [SellStartDate] datetime NOT NULL,
+    [SellEndDate] datetime NULL,
+    [DiscontinuedDate] datetime NULL,
+    [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_Product_ProductID] PRIMARY KEY ([ProductID] ASC)
 )
 
-alter table [Production].[Product] with check add constraint [FK_Product_ProductModel_ProductModelID] foreign key([ProductModelID]) references [Production].[ProductModel] ([ProductModelID]) alter table [Production].[Product] check constraint [FK_Product_ProductModel_ProductModelID]
-alter table [Production].[Product] with check add constraint [FK_Product_ProductSubcategory_ProductSubcategoryID] foreign key([ProductSubcategoryID]) references [Production].[ProductSubcategory] ([ProductSubcategoryID]) alter table [Production].[Product] check constraint [FK_Product_ProductSubcategory_ProductSubcategoryID]
-alter table [Production].[Product] with check add constraint [FK_Product_UnitMeasure_SizeUnitMeasureCode] foreign key([SizeUnitMeasureCode]) references [Production].[UnitMeasure] ([UnitMeasureCode]) alter table [Production].[Product] check constraint [FK_Product_UnitMeasure_SizeUnitMeasureCode]
-alter table [Production].[Product] with check add constraint [FK_Product_UnitMeasure_WeightUnitMeasureCode] foreign key([WeightUnitMeasureCode]) references [Production].[UnitMeasure] ([UnitMeasureCode]) alter table [Production].[Product] check constraint [FK_Product_UnitMeasure_WeightUnitMeasureCode]
+ALTER TABLE [Production].[Product] WITH CHECK ADD CONSTRAINT [FK_Product_ProductModel_ProductModelID] FOREIGN KEY ([ProductModelID]) REFERENCES [Production].[ProductModel] ([ProductModelID])
+ALTER TABLE [Production].[Product] CHECK CONSTRAINT [FK_Product_ProductModel_ProductModelID]
+ALTER TABLE [Production].[Product] WITH CHECK ADD CONSTRAINT [FK_Product_ProductSubcategory_ProductSubcategoryID] FOREIGN KEY ([ProductSubcategoryID]) REFERENCES [Production].[ProductSubcategory] ([ProductSubcategoryID])
+ALTER TABLE [Production].[Product] CHECK CONSTRAINT [FK_Product_ProductSubcategory_ProductSubcategoryID]
+ALTER TABLE [Production].[Product] WITH CHECK ADD CONSTRAINT [FK_Product_UnitMeasure_SizeUnitMeasureCode] FOREIGN KEY ([SizeUnitMeasureCode]) REFERENCES [Production].[UnitMeasure] ([UnitMeasureCode])
+ALTER TABLE [Production].[Product] CHECK CONSTRAINT [FK_Product_UnitMeasure_SizeUnitMeasureCode]
+ALTER TABLE [Production].[Product] WITH CHECK ADD CONSTRAINT [FK_Product_UnitMeasure_WeightUnitMeasureCode] FOREIGN KEY ([WeightUnitMeasureCode]) REFERENCES [Production].[UnitMeasure] ([UnitMeasureCode])
+ALTER TABLE [Production].[Product] CHECK CONSTRAINT [FK_Product_UnitMeasure_WeightUnitMeasureCode]
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Product]') AND name = 'AK_Product_ProductNumber')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Product_ProductNumber] ON [Production].[Product]([ProductNumber] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[Product]') and name = 'AK_Product_ProductNumber')
-create unique nonclustered index [AK_Product_ProductNumber] on [Production].[Product]([ProductNumber] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Product]') AND name = 'AK_Product_Name')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Product_Name] ON [Production].[Product]([Name] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[Product]') and name = 'AK_Product_Name')
-create unique nonclustered index [AK_Product_Name] on [Production].[Product]([Name] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[Product]') and name = 'AK_Product_rowguid')
-create unique nonclustered index [AK_Product_rowguid] on [Production].[Product]([rowguid] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Product]') AND name = 'AK_Product_rowguid')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Product_rowguid] ON [Production].[Product]([rowguid] ASC)

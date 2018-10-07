@@ -1,21 +1,19 @@
-if not exists (select * from sys.objects where object_id = object_id('[HumanResources].[Shift]') and type = 'U')
-create table [HumanResources].[Shift]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[HumanResources].[Shift]') AND type = 'U')
+CREATE TABLE [HumanResources].[Shift]
 (
-    [ShiftID] tinyint not null identity(1, 1),
-    [Name] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [StartTime] time not null,
-    [EndTime] time not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_Shift_ShiftID] primary key ([ShiftID] asc)
+    [ShiftID] tinyint NOT NULL IDENTITY(1, 1),
+    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [StartTime] time NOT NULL,
+    [EndTime] time NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_Shift_ShiftID] PRIMARY KEY ([ShiftID] ASC)
 )
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[HumanResources].[Shift]') AND name = 'AK_Shift_Name')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Shift_Name] ON [HumanResources].[Shift]([Name] ASC)
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[HumanResources].[Shift]') AND name = 'AK_Shift_StartTime_EndTime')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Shift_StartTime_EndTime] ON [HumanResources].[Shift]([StartTime] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[HumanResources].[Shift]') and name = 'AK_Shift_Name')
-create unique nonclustered index [AK_Shift_Name] on [HumanResources].[Shift]([Name] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[HumanResources].[Shift]') and name = 'AK_Shift_StartTime_EndTime')
-create unique nonclustered index [AK_Shift_StartTime_EndTime] on [HumanResources].[Shift]([StartTime] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[HumanResources].[Shift]') and name = 'AK_Shift_StartTime_EndTime')
-create unique nonclustered index [AK_Shift_StartTime_EndTime] on [HumanResources].[Shift]([EndTime] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[HumanResources].[Shift]') AND name = 'AK_Shift_StartTime_EndTime')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Shift_StartTime_EndTime] ON [HumanResources].[Shift]([EndTime] ASC)

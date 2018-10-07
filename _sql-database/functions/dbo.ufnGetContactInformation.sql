@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[dbo].[ufnGetContactInformation]') and type = 'TF')
-drop function [dbo].[ufnGetContactInformation]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[dbo].[ufnGetContactInformation]') AND type = 'TF')
+DROP FUNCTION [dbo].[ufnGetContactInformation]
+GO
 
 CREATE FUNCTION [dbo].[ufnGetContactInformation](@PersonID int)
 RETURNS @retContactInformation TABLE 

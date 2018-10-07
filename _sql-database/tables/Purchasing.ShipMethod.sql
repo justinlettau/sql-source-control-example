@@ -1,19 +1,17 @@
-if not exists (select * from sys.objects where object_id = object_id('[Purchasing].[ShipMethod]') and type = 'U')
-create table [Purchasing].[ShipMethod]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Purchasing].[ShipMethod]') AND type = 'U')
+CREATE TABLE [Purchasing].[ShipMethod]
 (
-    [ShipMethodID] int not null identity(1, 1),
-    [Name] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [ShipBase] money not null default((0.00)),
-    [ShipRate] money not null default((0.00)),
-    [rowguid] uniqueidentifier not null default(newid()),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_ShipMethod_ShipMethodID] primary key ([ShipMethodID] asc)
+    [ShipMethodID] int NOT NULL IDENTITY(1, 1),
+    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [ShipBase] money NOT NULL DEFAULT((0.00)),
+    [ShipRate] money NOT NULL DEFAULT((0.00)),
+    [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_ShipMethod_ShipMethodID] PRIMARY KEY ([ShipMethodID] ASC)
 )
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Purchasing].[ShipMethod]') AND name = 'AK_ShipMethod_Name')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_ShipMethod_Name] ON [Purchasing].[ShipMethod]([Name] ASC)
 
-
-if not exists (select * from sys.indexes where object_id = object_id('[Purchasing].[ShipMethod]') and name = 'AK_ShipMethod_Name')
-create unique nonclustered index [AK_ShipMethod_Name] on [Purchasing].[ShipMethod]([Name] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Purchasing].[ShipMethod]') and name = 'AK_ShipMethod_rowguid')
-create unique nonclustered index [AK_ShipMethod_rowguid] on [Purchasing].[ShipMethod]([rowguid] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Purchasing].[ShipMethod]') AND name = 'AK_ShipMethod_rowguid')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_ShipMethod_rowguid] ON [Purchasing].[ShipMethod]([rowguid] ASC)

@@ -1,12 +1,14 @@
-if not exists (select * from sys.objects where object_id = object_id('[Sales].[SalesOrderHeaderSalesReason]') and type = 'U')
-create table [Sales].[SalesOrderHeaderSalesReason]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Sales].[SalesOrderHeaderSalesReason]') AND type = 'U')
+CREATE TABLE [Sales].[SalesOrderHeaderSalesReason]
 (
-    [SalesOrderID] int not null,
-    [SalesReasonID] int not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_SalesOrderHeaderSalesReason_SalesOrderID_SalesReasonID] primary key ([SalesOrderID] asc)
-    constraint [PK_SalesOrderHeaderSalesReason_SalesOrderID_SalesReasonID] primary key ([SalesReasonID] asc)
+    [SalesOrderID] int NOT NULL,
+    [SalesReasonID] int NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_SalesOrderHeaderSalesReason_SalesOrderID_SalesReasonID] PRIMARY KEY ([SalesOrderID] ASC)
+    CONSTRAINT [PK_SalesOrderHeaderSalesReason_SalesOrderID_SalesReasonID] PRIMARY KEY ([SalesReasonID] ASC)
 )
 
-alter table [Sales].[SalesOrderHeaderSalesReason] with check add constraint [FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID] foreign key([SalesReasonID]) references [Sales].[SalesReason] ([SalesReasonID]) alter table [Sales].[SalesOrderHeaderSalesReason] check constraint [FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID]
-alter table [Sales].[SalesOrderHeaderSalesReason] with check add constraint [FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID] foreign key([SalesOrderID]) references [Sales].[SalesOrderHeader] ([SalesOrderID]) on delete cascade alter table [Sales].[SalesOrderHeaderSalesReason] check constraint [FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID]
+ALTER TABLE [Sales].[SalesOrderHeaderSalesReason] WITH CHECK ADD CONSTRAINT [FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID] FOREIGN KEY ([SalesReasonID]) REFERENCES [Sales].[SalesReason] ([SalesReasonID])
+ALTER TABLE [Sales].[SalesOrderHeaderSalesReason] CHECK CONSTRAINT [FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID]
+ALTER TABLE [Sales].[SalesOrderHeaderSalesReason] WITH CHECK ADD CONSTRAINT [FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID] FOREIGN KEY ([SalesOrderID]) REFERENCES [Sales].[SalesOrderHeader] ([SalesOrderID]) ON DELETE CASCADE
+ALTER TABLE [Sales].[SalesOrderHeaderSalesReason] CHECK CONSTRAINT [FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID]

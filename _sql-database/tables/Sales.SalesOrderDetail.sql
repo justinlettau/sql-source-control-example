@@ -1,28 +1,30 @@
-if not exists (select * from sys.objects where object_id = object_id('[Sales].[SalesOrderDetail]') and type = 'U')
-create table [Sales].[SalesOrderDetail]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Sales].[SalesOrderDetail]') AND type = 'U')
+CREATE TABLE [Sales].[SalesOrderDetail]
 (
-    [SalesOrderID] int not null,
-    [SalesOrderDetailID] int not null identity(1, 1),
-    [CarrierTrackingNumber] nvarchar(25) collate SQL_Latin1_General_CP1_CI_AS null,
-    [OrderQty] smallint not null,
-    [ProductID] int not null,
-    [SpecialOfferID] int not null,
-    [UnitPrice] money not null,
-    [UnitPriceDiscount] money not null default((0.0)),
-    [LineTotal] as (isnull(([UnitPrice]*((1.0)-[UnitPriceDiscount]))*[OrderQty],(0.0))),
-    [rowguid] uniqueidentifier not null default(newid()),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID] primary key ([SalesOrderID] asc)
-    constraint [PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID] primary key ([SalesOrderDetailID] asc)
+    [SalesOrderID] int NOT NULL,
+    [SalesOrderDetailID] int NOT NULL IDENTITY(1, 1),
+    [CarrierTrackingNumber] nvarchar(25) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [OrderQty] smallint NOT NULL,
+    [ProductID] int NOT NULL,
+    [SpecialOfferID] int NOT NULL,
+    [UnitPrice] money NOT NULL,
+    [UnitPriceDiscount] money NOT NULL DEFAULT((0.0)),
+    [LineTotal] AS (isnull(([UnitPrice]*((1.0)-[UnitPriceDiscount]))*[OrderQty],(0.0))),
+    [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID] PRIMARY KEY ([SalesOrderID] ASC)
+    CONSTRAINT [PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID] PRIMARY KEY ([SalesOrderDetailID] ASC)
 )
 
-alter table [Sales].[SalesOrderDetail] with check add constraint [FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID] foreign key([SpecialOfferID]) references [Sales].[SpecialOfferProduct] ([SpecialOfferID]) alter table [Sales].[SalesOrderDetail] check constraint [FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID]
-alter table [Sales].[SalesOrderDetail] with check add constraint [FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID] foreign key([ProductID]) references [Sales].[SpecialOfferProduct] ([ProductID]) alter table [Sales].[SalesOrderDetail] check constraint [FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID]
-alter table [Sales].[SalesOrderDetail] with check add constraint [FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID] foreign key([SalesOrderID]) references [Sales].[SalesOrderHeader] ([SalesOrderID]) on delete cascade alter table [Sales].[SalesOrderDetail] check constraint [FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID]
+ALTER TABLE [Sales].[SalesOrderDetail] WITH CHECK ADD CONSTRAINT [FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID] FOREIGN KEY ([SpecialOfferID]) REFERENCES [Sales].[SpecialOfferProduct] ([SpecialOfferID])
+ALTER TABLE [Sales].[SalesOrderDetail] CHECK CONSTRAINT [FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID]
+ALTER TABLE [Sales].[SalesOrderDetail] WITH CHECK ADD CONSTRAINT [FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID] FOREIGN KEY ([ProductID]) REFERENCES [Sales].[SpecialOfferProduct] ([ProductID])
+ALTER TABLE [Sales].[SalesOrderDetail] CHECK CONSTRAINT [FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID]
+ALTER TABLE [Sales].[SalesOrderDetail] WITH CHECK ADD CONSTRAINT [FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID] FOREIGN KEY ([SalesOrderID]) REFERENCES [Sales].[SalesOrderHeader] ([SalesOrderID]) ON DELETE CASCADE
+ALTER TABLE [Sales].[SalesOrderDetail] CHECK CONSTRAINT [FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID]
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[SalesOrderDetail]') AND name = 'AK_SalesOrderDetail_rowguid')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_SalesOrderDetail_rowguid] ON [Sales].[SalesOrderDetail]([rowguid] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[SalesOrderDetail]') and name = 'AK_SalesOrderDetail_rowguid')
-create unique nonclustered index [AK_SalesOrderDetail_rowguid] on [Sales].[SalesOrderDetail]([rowguid] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[SalesOrderDetail]') and name = 'IX_SalesOrderDetail_ProductID')
-create nonclustered index [IX_SalesOrderDetail_ProductID] on [Sales].[SalesOrderDetail]([ProductID] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[SalesOrderDetail]') AND name = 'IX_SalesOrderDetail_ProductID')
+CREATE NONCLUSTERED INDEX [IX_SalesOrderDetail_ProductID] ON [Sales].[SalesOrderDetail]([ProductID] ASC)

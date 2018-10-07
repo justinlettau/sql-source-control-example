@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[Sales].[vStoreWithDemographics]') and type = 'V')
-drop view [Sales].[vStoreWithDemographics]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Sales].[vStoreWithDemographics]') AND type = 'V')
+DROP VIEW [Sales].[vStoreWithDemographics]
+GO
 
 CREATE VIEW [Sales].[vStoreWithDemographics] AS 
 SELECT 

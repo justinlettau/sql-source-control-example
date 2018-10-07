@@ -1,40 +1,40 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[Document]') and type = 'U')
-create table [Production].[Document]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[Document]') AND type = 'U')
+CREATE TABLE [Production].[Document]
 (
-    [DocumentNode] hierarchyid not null,
-    [DocumentLevel] as ([DocumentNode].[GetLevel]()),
-    [Title] nvarchar(50) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [Owner] int not null,
-    [FolderFlag] bit not null default((0)),
-    [FileName] nvarchar(400) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [FileExtension] nvarchar(8) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [Revision] nchar(5) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [ChangeNumber] int not null default((0)),
-    [Status] tinyint not null,
-    [DocumentSummary] nvarchar(max) collate SQL_Latin1_General_CP1_CI_AS null,
-    [Document] varbinary(max) null,
-    [rowguid] uniqueidentifier not null default(newid()),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_Document_DocumentNode] primary key ([DocumentNode] asc)
+    [DocumentNode] hierarchyid NOT NULL,
+    [DocumentLevel] AS ([DocumentNode].[GetLevel]()),
+    [Title] nvarchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Owner] int NOT NULL,
+    [FolderFlag] bit NOT NULL DEFAULT((0)),
+    [FileName] nvarchar(400) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [FileExtension] nvarchar(8) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Revision] nchar(5) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [ChangeNumber] int NOT NULL DEFAULT((0)),
+    [Status] tinyint NOT NULL,
+    [DocumentSummary] nvarchar(max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [Document] varbinary(max) NULL,
+    [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_Document_DocumentNode] PRIMARY KEY ([DocumentNode] ASC)
 )
 
-alter table [HumanResources].[Document] with check add constraint [FK_Document_Employee_Owner] foreign key([Owner]) references [HumanResources].[Employee] ([BusinessEntityID]) alter table [HumanResources].[Document] check constraint [FK_Document_Employee_Owner]
+ALTER TABLE [HumanResources].[Document] WITH CHECK ADD CONSTRAINT [FK_Document_Employee_Owner] FOREIGN KEY ([Owner]) REFERENCES [HumanResources].[Employee] ([BusinessEntityID])
+ALTER TABLE [HumanResources].[Document] CHECK CONSTRAINT [FK_Document_Employee_Owner]
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'UQ__Document__F73921F7C5112C2E')
+CREATE UNIQUE NONCLUSTERED INDEX [UQ__Document__F73921F7C5112C2E] ON [Production].[Document]([rowguid] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[Document]') and name = 'UQ__Document__F73921F7C5112C2E')
-create unique nonclustered index [UQ__Document__F73921F7C5112C2E] on [Production].[Document]([rowguid] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'AK_Document_DocumentLevel_DocumentNode')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Document_DocumentLevel_DocumentNode] ON [Production].[Document]([DocumentLevel] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[Document]') and name = 'AK_Document_DocumentLevel_DocumentNode')
-create unique nonclustered index [AK_Document_DocumentLevel_DocumentNode] on [Production].[Document]([DocumentLevel] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'AK_Document_DocumentLevel_DocumentNode')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Document_DocumentLevel_DocumentNode] ON [Production].[Document]([DocumentNode] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[Document]') and name = 'AK_Document_DocumentLevel_DocumentNode')
-create unique nonclustered index [AK_Document_DocumentLevel_DocumentNode] on [Production].[Document]([DocumentNode] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'AK_Document_rowguid')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Document_rowguid] ON [Production].[Document]([rowguid] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[Document]') and name = 'AK_Document_rowguid')
-create unique nonclustered index [AK_Document_rowguid] on [Production].[Document]([rowguid] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'IX_Document_FileName_Revision')
+CREATE NONCLUSTERED INDEX [IX_Document_FileName_Revision] ON [Production].[Document]([FileName] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[Document]') and name = 'IX_Document_FileName_Revision')
-create nonclustered index [IX_Document_FileName_Revision] on [Production].[Document]([FileName] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[Document]') and name = 'IX_Document_FileName_Revision')
-create nonclustered index [IX_Document_FileName_Revision] on [Production].[Document]([Revision] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'IX_Document_FileName_Revision')
+CREATE NONCLUSTERED INDEX [IX_Document_FileName_Revision] ON [Production].[Document]([Revision] ASC)

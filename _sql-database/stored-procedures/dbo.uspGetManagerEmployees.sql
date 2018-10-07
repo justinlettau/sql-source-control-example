@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[dbo].[uspGetManagerEmployees]') and type = 'P')
-drop procedure [dbo].[uspGetManagerEmployees]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[dbo].[uspGetManagerEmployees]') AND type = 'P')
+DROP PROCEDURE [dbo].[uspGetManagerEmployees]
+GO
 
 CREATE PROCEDURE [dbo].[uspGetManagerEmployees]
     @BusinessEntityID [int]

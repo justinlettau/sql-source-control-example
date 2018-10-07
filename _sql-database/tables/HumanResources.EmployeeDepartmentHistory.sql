@@ -1,25 +1,27 @@
-if not exists (select * from sys.objects where object_id = object_id('[HumanResources].[EmployeeDepartmentHistory]') and type = 'U')
-create table [HumanResources].[EmployeeDepartmentHistory]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[HumanResources].[EmployeeDepartmentHistory]') AND type = 'U')
+CREATE TABLE [HumanResources].[EmployeeDepartmentHistory]
 (
-    [BusinessEntityID] int not null,
-    [DepartmentID] smallint not null,
-    [ShiftID] tinyint not null,
-    [StartDate] date not null,
-    [EndDate] date null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] primary key ([BusinessEntityID] asc)
-    constraint [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] primary key ([DepartmentID] asc)
-    constraint [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] primary key ([ShiftID] asc)
-    constraint [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] primary key ([StartDate] asc)
+    [BusinessEntityID] int NOT NULL,
+    [DepartmentID] smallint NOT NULL,
+    [ShiftID] tinyint NOT NULL,
+    [StartDate] date NOT NULL,
+    [EndDate] date NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] PRIMARY KEY ([BusinessEntityID] ASC)
+    CONSTRAINT [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] PRIMARY KEY ([DepartmentID] ASC)
+    CONSTRAINT [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] PRIMARY KEY ([ShiftID] ASC)
+    CONSTRAINT [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] PRIMARY KEY ([StartDate] ASC)
 )
 
-alter table [HumanResources].[EmployeeDepartmentHistory] with check add constraint [FK_EmployeeDepartmentHistory_Shift_ShiftID] foreign key([ShiftID]) references [HumanResources].[Shift] ([ShiftID]) alter table [HumanResources].[EmployeeDepartmentHistory] check constraint [FK_EmployeeDepartmentHistory_Shift_ShiftID]
-alter table [HumanResources].[EmployeeDepartmentHistory] with check add constraint [FK_EmployeeDepartmentHistory_Department_DepartmentID] foreign key([DepartmentID]) references [HumanResources].[Department] ([DepartmentID]) alter table [HumanResources].[EmployeeDepartmentHistory] check constraint [FK_EmployeeDepartmentHistory_Department_DepartmentID]
-alter table [HumanResources].[EmployeeDepartmentHistory] with check add constraint [FK_EmployeeDepartmentHistory_Employee_BusinessEntityID] foreign key([BusinessEntityID]) references [HumanResources].[Employee] ([BusinessEntityID]) alter table [HumanResources].[EmployeeDepartmentHistory] check constraint [FK_EmployeeDepartmentHistory_Employee_BusinessEntityID]
+ALTER TABLE [HumanResources].[EmployeeDepartmentHistory] WITH CHECK ADD CONSTRAINT [FK_EmployeeDepartmentHistory_Shift_ShiftID] FOREIGN KEY ([ShiftID]) REFERENCES [HumanResources].[Shift] ([ShiftID])
+ALTER TABLE [HumanResources].[EmployeeDepartmentHistory] CHECK CONSTRAINT [FK_EmployeeDepartmentHistory_Shift_ShiftID]
+ALTER TABLE [HumanResources].[EmployeeDepartmentHistory] WITH CHECK ADD CONSTRAINT [FK_EmployeeDepartmentHistory_Department_DepartmentID] FOREIGN KEY ([DepartmentID]) REFERENCES [HumanResources].[Department] ([DepartmentID])
+ALTER TABLE [HumanResources].[EmployeeDepartmentHistory] CHECK CONSTRAINT [FK_EmployeeDepartmentHistory_Department_DepartmentID]
+ALTER TABLE [HumanResources].[EmployeeDepartmentHistory] WITH CHECK ADD CONSTRAINT [FK_EmployeeDepartmentHistory_Employee_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [HumanResources].[Employee] ([BusinessEntityID])
+ALTER TABLE [HumanResources].[EmployeeDepartmentHistory] CHECK CONSTRAINT [FK_EmployeeDepartmentHistory_Employee_BusinessEntityID]
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[HumanResources].[EmployeeDepartmentHistory]') AND name = 'IX_EmployeeDepartmentHistory_DepartmentID')
+CREATE NONCLUSTERED INDEX [IX_EmployeeDepartmentHistory_DepartmentID] ON [HumanResources].[EmployeeDepartmentHistory]([DepartmentID] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[HumanResources].[EmployeeDepartmentHistory]') and name = 'IX_EmployeeDepartmentHistory_DepartmentID')
-create nonclustered index [IX_EmployeeDepartmentHistory_DepartmentID] on [HumanResources].[EmployeeDepartmentHistory]([DepartmentID] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[HumanResources].[EmployeeDepartmentHistory]') and name = 'IX_EmployeeDepartmentHistory_ShiftID')
-create nonclustered index [IX_EmployeeDepartmentHistory_ShiftID] on [HumanResources].[EmployeeDepartmentHistory]([ShiftID] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[HumanResources].[EmployeeDepartmentHistory]') AND name = 'IX_EmployeeDepartmentHistory_ShiftID')
+CREATE NONCLUSTERED INDEX [IX_EmployeeDepartmentHistory_ShiftID] ON [HumanResources].[EmployeeDepartmentHistory]([ShiftID] ASC)

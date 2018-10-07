@@ -1,12 +1,14 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[ProductModelIllustration]') and type = 'U')
-create table [Production].[ProductModelIllustration]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[ProductModelIllustration]') AND type = 'U')
+CREATE TABLE [Production].[ProductModelIllustration]
 (
-    [ProductModelID] int not null,
-    [IllustrationID] int not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_ProductModelIllustration_ProductModelID_IllustrationID] primary key ([ProductModelID] asc)
-    constraint [PK_ProductModelIllustration_ProductModelID_IllustrationID] primary key ([IllustrationID] asc)
+    [ProductModelID] int NOT NULL,
+    [IllustrationID] int NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_ProductModelIllustration_ProductModelID_IllustrationID] PRIMARY KEY ([ProductModelID] ASC)
+    CONSTRAINT [PK_ProductModelIllustration_ProductModelID_IllustrationID] PRIMARY KEY ([IllustrationID] ASC)
 )
 
-alter table [Production].[ProductModelIllustration] with check add constraint [FK_ProductModelIllustration_Illustration_IllustrationID] foreign key([IllustrationID]) references [Production].[Illustration] ([IllustrationID]) alter table [Production].[ProductModelIllustration] check constraint [FK_ProductModelIllustration_Illustration_IllustrationID]
-alter table [Production].[ProductModelIllustration] with check add constraint [FK_ProductModelIllustration_ProductModel_ProductModelID] foreign key([ProductModelID]) references [Production].[ProductModel] ([ProductModelID]) alter table [Production].[ProductModelIllustration] check constraint [FK_ProductModelIllustration_ProductModel_ProductModelID]
+ALTER TABLE [Production].[ProductModelIllustration] WITH CHECK ADD CONSTRAINT [FK_ProductModelIllustration_Illustration_IllustrationID] FOREIGN KEY ([IllustrationID]) REFERENCES [Production].[Illustration] ([IllustrationID])
+ALTER TABLE [Production].[ProductModelIllustration] CHECK CONSTRAINT [FK_ProductModelIllustration_Illustration_IllustrationID]
+ALTER TABLE [Production].[ProductModelIllustration] WITH CHECK ADD CONSTRAINT [FK_ProductModelIllustration_ProductModel_ProductModelID] FOREIGN KEY ([ProductModelID]) REFERENCES [Production].[ProductModel] ([ProductModelID])
+ALTER TABLE [Production].[ProductModelIllustration] CHECK CONSTRAINT [FK_ProductModelIllustration_ProductModel_ProductModelID]

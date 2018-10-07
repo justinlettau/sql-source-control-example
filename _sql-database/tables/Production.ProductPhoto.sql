@@ -1,11 +1,11 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[ProductPhoto]') and type = 'U')
-create table [Production].[ProductPhoto]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[ProductPhoto]') AND type = 'U')
+CREATE TABLE [Production].[ProductPhoto]
 (
-    [ProductPhotoID] int not null identity(1, 1),
-    [ThumbNailPhoto] varbinary(max) null,
-    [ThumbnailPhotoFileName] nvarchar(50) collate SQL_Latin1_General_CP1_CI_AS null,
-    [LargePhoto] varbinary(max) null,
-    [LargePhotoFileName] nvarchar(50) collate SQL_Latin1_General_CP1_CI_AS null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_ProductPhoto_ProductPhotoID] primary key ([ProductPhotoID] asc)
+    [ProductPhotoID] int NOT NULL IDENTITY(1, 1),
+    [ThumbNailPhoto] varbinary(max) NULL,
+    [ThumbnailPhotoFileName] nvarchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [LargePhoto] varbinary(max) NULL,
+    [LargePhotoFileName] nvarchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_ProductPhoto_ProductPhotoID] PRIMARY KEY ([ProductPhotoID] ASC)
 )

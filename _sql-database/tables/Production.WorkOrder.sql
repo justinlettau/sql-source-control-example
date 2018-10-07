@@ -1,25 +1,26 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[WorkOrder]') and type = 'U')
-create table [Production].[WorkOrder]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[WorkOrder]') AND type = 'U')
+CREATE TABLE [Production].[WorkOrder]
 (
-    [WorkOrderID] int not null identity(1, 1),
-    [ProductID] int not null,
-    [OrderQty] int not null,
-    [StockedQty] as (isnull([OrderQty]-[ScrappedQty],(0))),
-    [ScrappedQty] smallint not null,
-    [StartDate] datetime not null,
-    [EndDate] datetime null,
-    [DueDate] datetime not null,
-    [ScrapReasonID] smallint null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_WorkOrder_WorkOrderID] primary key ([WorkOrderID] asc)
+    [WorkOrderID] int NOT NULL IDENTITY(1, 1),
+    [ProductID] int NOT NULL,
+    [OrderQty] int NOT NULL,
+    [StockedQty] AS (isnull([OrderQty]-[ScrappedQty],(0))),
+    [ScrappedQty] smallint NOT NULL,
+    [StartDate] datetime NOT NULL,
+    [EndDate] datetime NULL,
+    [DueDate] datetime NOT NULL,
+    [ScrapReasonID] smallint NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_WorkOrder_WorkOrderID] PRIMARY KEY ([WorkOrderID] ASC)
 )
 
-alter table [Production].[WorkOrder] with check add constraint [FK_WorkOrder_Product_ProductID] foreign key([ProductID]) references [Production].[Product] ([ProductID]) alter table [Production].[WorkOrder] check constraint [FK_WorkOrder_Product_ProductID]
-alter table [Production].[WorkOrder] with check add constraint [FK_WorkOrder_ScrapReason_ScrapReasonID] foreign key([ScrapReasonID]) references [Production].[ScrapReason] ([ScrapReasonID]) alter table [Production].[WorkOrder] check constraint [FK_WorkOrder_ScrapReason_ScrapReasonID]
+ALTER TABLE [Production].[WorkOrder] WITH CHECK ADD CONSTRAINT [FK_WorkOrder_Product_ProductID] FOREIGN KEY ([ProductID]) REFERENCES [Production].[Product] ([ProductID])
+ALTER TABLE [Production].[WorkOrder] CHECK CONSTRAINT [FK_WorkOrder_Product_ProductID]
+ALTER TABLE [Production].[WorkOrder] WITH CHECK ADD CONSTRAINT [FK_WorkOrder_ScrapReason_ScrapReasonID] FOREIGN KEY ([ScrapReasonID]) REFERENCES [Production].[ScrapReason] ([ScrapReasonID])
+ALTER TABLE [Production].[WorkOrder] CHECK CONSTRAINT [FK_WorkOrder_ScrapReason_ScrapReasonID]
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[WorkOrder]') AND name = 'IX_WorkOrder_ScrapReasonID')
+CREATE NONCLUSTERED INDEX [IX_WorkOrder_ScrapReasonID] ON [Production].[WorkOrder]([ScrapReasonID] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[WorkOrder]') and name = 'IX_WorkOrder_ScrapReasonID')
-create nonclustered index [IX_WorkOrder_ScrapReasonID] on [Production].[WorkOrder]([ScrapReasonID] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[WorkOrder]') and name = 'IX_WorkOrder_ProductID')
-create nonclustered index [IX_WorkOrder_ProductID] on [Production].[WorkOrder]([ProductID] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[WorkOrder]') AND name = 'IX_WorkOrder_ProductID')
+CREATE NONCLUSTERED INDEX [IX_WorkOrder_ProductID] ON [Production].[WorkOrder]([ProductID] ASC)

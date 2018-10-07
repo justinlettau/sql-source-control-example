@@ -1,12 +1,14 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[ProductDocument]') and type = 'U')
-create table [Production].[ProductDocument]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[ProductDocument]') AND type = 'U')
+CREATE TABLE [Production].[ProductDocument]
 (
-    [ProductID] int not null,
-    [DocumentNode] hierarchyid not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_ProductDocument_ProductID_DocumentNode] primary key ([ProductID] asc)
-    constraint [PK_ProductDocument_ProductID_DocumentNode] primary key ([DocumentNode] asc)
+    [ProductID] int NOT NULL,
+    [DocumentNode] hierarchyid NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_ProductDocument_ProductID_DocumentNode] PRIMARY KEY ([ProductID] ASC)
+    CONSTRAINT [PK_ProductDocument_ProductID_DocumentNode] PRIMARY KEY ([DocumentNode] ASC)
 )
 
-alter table [Production].[ProductDocument] with check add constraint [FK_ProductDocument_Product_ProductID] foreign key([ProductID]) references [Production].[Product] ([ProductID]) alter table [Production].[ProductDocument] check constraint [FK_ProductDocument_Product_ProductID]
-alter table [Production].[ProductDocument] with check add constraint [FK_ProductDocument_Document_DocumentNode] foreign key([DocumentNode]) references [Production].[Document] ([DocumentNode]) alter table [Production].[ProductDocument] check constraint [FK_ProductDocument_Document_DocumentNode]
+ALTER TABLE [Production].[ProductDocument] WITH CHECK ADD CONSTRAINT [FK_ProductDocument_Product_ProductID] FOREIGN KEY ([ProductID]) REFERENCES [Production].[Product] ([ProductID])
+ALTER TABLE [Production].[ProductDocument] CHECK CONSTRAINT [FK_ProductDocument_Product_ProductID]
+ALTER TABLE [Production].[ProductDocument] WITH CHECK ADD CONSTRAINT [FK_ProductDocument_Document_DocumentNode] FOREIGN KEY ([DocumentNode]) REFERENCES [Production].[Document] ([DocumentNode])
+ALTER TABLE [Production].[ProductDocument] CHECK CONSTRAINT [FK_ProductDocument_Document_DocumentNode]

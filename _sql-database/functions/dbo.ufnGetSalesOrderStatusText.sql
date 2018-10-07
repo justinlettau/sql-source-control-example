@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[dbo].[ufnGetSalesOrderStatusText]') and type = 'FN')
-drop function [dbo].[ufnGetSalesOrderStatusText]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[dbo].[ufnGetSalesOrderStatusText]') AND type = 'FN')
+DROP FUNCTION [dbo].[ufnGetSalesOrderStatusText]
+GO
 
 CREATE FUNCTION [dbo].[ufnGetSalesOrderStatusText](@Status [tinyint])
 RETURNS [nvarchar](15) 

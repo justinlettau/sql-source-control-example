@@ -1,25 +1,26 @@
-if not exists (select * from sys.objects where object_id = object_id('[Sales].[CurrencyRate]') and type = 'U')
-create table [Sales].[CurrencyRate]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Sales].[CurrencyRate]') AND type = 'U')
+CREATE TABLE [Sales].[CurrencyRate]
 (
-    [CurrencyRateID] int not null identity(1, 1),
-    [CurrencyRateDate] datetime not null,
-    [FromCurrencyCode] nchar(3) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [ToCurrencyCode] nchar(3) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [AverageRate] money not null,
-    [EndOfDayRate] money not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_CurrencyRate_CurrencyRateID] primary key ([CurrencyRateID] asc)
+    [CurrencyRateID] int NOT NULL IDENTITY(1, 1),
+    [CurrencyRateDate] datetime NOT NULL,
+    [FromCurrencyCode] nchar(3) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [ToCurrencyCode] nchar(3) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [AverageRate] money NOT NULL,
+    [EndOfDayRate] money NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_CurrencyRate_CurrencyRateID] PRIMARY KEY ([CurrencyRateID] ASC)
 )
 
-alter table [Sales].[CurrencyRate] with check add constraint [FK_CurrencyRate_Currency_FromCurrencyCode] foreign key([FromCurrencyCode]) references [Sales].[Currency] ([CurrencyCode]) alter table [Sales].[CurrencyRate] check constraint [FK_CurrencyRate_Currency_FromCurrencyCode]
-alter table [Sales].[CurrencyRate] with check add constraint [FK_CurrencyRate_Currency_ToCurrencyCode] foreign key([ToCurrencyCode]) references [Sales].[Currency] ([CurrencyCode]) alter table [Sales].[CurrencyRate] check constraint [FK_CurrencyRate_Currency_ToCurrencyCode]
+ALTER TABLE [Sales].[CurrencyRate] WITH CHECK ADD CONSTRAINT [FK_CurrencyRate_Currency_FromCurrencyCode] FOREIGN KEY ([FromCurrencyCode]) REFERENCES [Sales].[Currency] ([CurrencyCode])
+ALTER TABLE [Sales].[CurrencyRate] CHECK CONSTRAINT [FK_CurrencyRate_Currency_FromCurrencyCode]
+ALTER TABLE [Sales].[CurrencyRate] WITH CHECK ADD CONSTRAINT [FK_CurrencyRate_Currency_ToCurrencyCode] FOREIGN KEY ([ToCurrencyCode]) REFERENCES [Sales].[Currency] ([CurrencyCode])
+ALTER TABLE [Sales].[CurrencyRate] CHECK CONSTRAINT [FK_CurrencyRate_Currency_ToCurrencyCode]
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[CurrencyRate]') AND name = 'AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode] ON [Sales].[CurrencyRate]([CurrencyRateDate] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[CurrencyRate]') and name = 'AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode')
-create unique nonclustered index [AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode] on [Sales].[CurrencyRate]([CurrencyRateDate] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[CurrencyRate]') AND name = 'AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode] ON [Sales].[CurrencyRate]([FromCurrencyCode] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[CurrencyRate]') and name = 'AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode')
-create unique nonclustered index [AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode] on [Sales].[CurrencyRate]([FromCurrencyCode] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[CurrencyRate]') and name = 'AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode')
-create unique nonclustered index [AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode] on [Sales].[CurrencyRate]([ToCurrencyCode] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[CurrencyRate]') AND name = 'AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode] ON [Sales].[CurrencyRate]([ToCurrencyCode] ASC)

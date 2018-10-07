@@ -1,15 +1,13 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[Location]') and type = 'U')
-create table [Production].[Location]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[Location]') AND type = 'U')
+CREATE TABLE [Production].[Location]
 (
-    [LocationID] smallint not null identity(1, 1),
-    [Name] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [CostRate] smallmoney not null default((0.00)),
-    [Availability] decimal(8, 2) not null default((0.00)),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_Location_LocationID] primary key ([LocationID] asc)
+    [LocationID] smallint NOT NULL IDENTITY(1, 1),
+    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [CostRate] smallmoney NOT NULL DEFAULT((0.00)),
+    [Availability] decimal(8, 2) NOT NULL DEFAULT((0.00)),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_Location_LocationID] PRIMARY KEY ([LocationID] ASC)
 )
 
-
-
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[Location]') and name = 'AK_Location_Name')
-create unique nonclustered index [AK_Location_Name] on [Production].[Location]([Name] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Location]') AND name = 'AK_Location_Name')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Location_Name] ON [Production].[Location]([Name] ASC)

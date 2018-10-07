@@ -1,18 +1,19 @@
-if not exists (select * from sys.objects where object_id = object_id('[Person].[PersonPhone]') and type = 'U')
-create table [Person].[PersonPhone]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Person].[PersonPhone]') AND type = 'U')
+CREATE TABLE [Person].[PersonPhone]
 (
-    [BusinessEntityID] int not null,
-    [PhoneNumber] Phone collate SQL_Latin1_General_CP1_CI_AS not null,
-    [PhoneNumberTypeID] int not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_PersonPhone_BusinessEntityID_PhoneNumber_PhoneNumberTypeID] primary key ([BusinessEntityID] asc)
-    constraint [PK_PersonPhone_BusinessEntityID_PhoneNumber_PhoneNumberTypeID] primary key ([PhoneNumber] asc)
-    constraint [PK_PersonPhone_BusinessEntityID_PhoneNumber_PhoneNumberTypeID] primary key ([PhoneNumberTypeID] asc)
+    [BusinessEntityID] int NOT NULL,
+    [PhoneNumber] Phone COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [PhoneNumberTypeID] int NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_PersonPhone_BusinessEntityID_PhoneNumber_PhoneNumberTypeID] PRIMARY KEY ([BusinessEntityID] ASC)
+    CONSTRAINT [PK_PersonPhone_BusinessEntityID_PhoneNumber_PhoneNumberTypeID] PRIMARY KEY ([PhoneNumber] ASC)
+    CONSTRAINT [PK_PersonPhone_BusinessEntityID_PhoneNumber_PhoneNumberTypeID] PRIMARY KEY ([PhoneNumberTypeID] ASC)
 )
 
-alter table [Person].[PersonPhone] with check add constraint [FK_PersonPhone_Person_BusinessEntityID] foreign key([BusinessEntityID]) references [Person].[Person] ([BusinessEntityID]) alter table [Person].[PersonPhone] check constraint [FK_PersonPhone_Person_BusinessEntityID]
-alter table [Person].[PersonPhone] with check add constraint [FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID] foreign key([PhoneNumberTypeID]) references [Person].[PhoneNumberType] ([PhoneNumberTypeID]) alter table [Person].[PersonPhone] check constraint [FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID]
+ALTER TABLE [Person].[PersonPhone] WITH CHECK ADD CONSTRAINT [FK_PersonPhone_Person_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [Person].[Person] ([BusinessEntityID])
+ALTER TABLE [Person].[PersonPhone] CHECK CONSTRAINT [FK_PersonPhone_Person_BusinessEntityID]
+ALTER TABLE [Person].[PersonPhone] WITH CHECK ADD CONSTRAINT [FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID] FOREIGN KEY ([PhoneNumberTypeID]) REFERENCES [Person].[PhoneNumberType] ([PhoneNumberTypeID])
+ALTER TABLE [Person].[PersonPhone] CHECK CONSTRAINT [FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID]
 
-
-if not exists (select * from sys.indexes where object_id = object_id('[Person].[PersonPhone]') and name = 'IX_PersonPhone_PhoneNumber')
-create nonclustered index [IX_PersonPhone_PhoneNumber] on [Person].[PersonPhone]([PhoneNumber] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[PersonPhone]') AND name = 'IX_PersonPhone_PhoneNumber')
+CREATE NONCLUSTERED INDEX [IX_PersonPhone_PhoneNumber] ON [Person].[PersonPhone]([PhoneNumber] ASC)

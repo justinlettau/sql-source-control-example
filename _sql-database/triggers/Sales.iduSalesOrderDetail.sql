@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[Sales].[iduSalesOrderDetail]') and type = 'TR')
-drop trigger [Sales].[iduSalesOrderDetail]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Sales].[iduSalesOrderDetail]') AND type = 'TR')
+DROP TRIGGER [Sales].[iduSalesOrderDetail]
+GO
 
 CREATE TRIGGER [Sales].[iduSalesOrderDetail] ON [Sales].[SalesOrderDetail] 
 AFTER INSERT, DELETE, UPDATE AS 

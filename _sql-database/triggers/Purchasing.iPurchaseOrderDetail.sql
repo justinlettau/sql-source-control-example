@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[Purchasing].[iPurchaseOrderDetail]') and type = 'TR')
-drop trigger [Purchasing].[iPurchaseOrderDetail]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Purchasing].[iPurchaseOrderDetail]') AND type = 'TR')
+DROP TRIGGER [Purchasing].[iPurchaseOrderDetail]
+GO
 
 CREATE TRIGGER [Purchasing].[iPurchaseOrderDetail] ON [Purchasing].[PurchaseOrderDetail] 
 AFTER INSERT AS

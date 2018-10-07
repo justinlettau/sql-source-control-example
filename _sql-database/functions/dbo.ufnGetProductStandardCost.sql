@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[dbo].[ufnGetProductStandardCost]') and type = 'FN')
-drop function [dbo].[ufnGetProductStandardCost]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[dbo].[ufnGetProductStandardCost]') AND type = 'FN')
+DROP FUNCTION [dbo].[ufnGetProductStandardCost]
+GO
 
 CREATE FUNCTION [dbo].[ufnGetProductStandardCost](@ProductID [int], @OrderDate [datetime])
 RETURNS [money] 

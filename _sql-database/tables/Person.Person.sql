@@ -1,33 +1,33 @@
-if not exists (select * from sys.objects where object_id = object_id('[Person].[Person]') and type = 'U')
-create table [Person].[Person]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Person].[Person]') AND type = 'U')
+CREATE TABLE [Person].[Person]
 (
-    [BusinessEntityID] int not null,
-    [PersonType] nchar(2) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [NameStyle] NameStyle not null default((0)),
-    [Title] nvarchar(8) collate SQL_Latin1_General_CP1_CI_AS null,
-    [FirstName] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [MiddleName] Name collate SQL_Latin1_General_CP1_CI_AS null,
-    [LastName] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [Suffix] nvarchar(10) collate SQL_Latin1_General_CP1_CI_AS null,
-    [EmailPromotion] int not null default((0)),
-    [AdditionalContactInfo] xml null,
-    [Demographics] xml null,
-    [rowguid] uniqueidentifier not null default(newid()),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_Person_BusinessEntityID] primary key ([BusinessEntityID] asc)
+    [BusinessEntityID] int NOT NULL,
+    [PersonType] nchar(2) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [NameStyle] NameStyle NOT NULL DEFAULT((0)),
+    [Title] nvarchar(8) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [FirstName] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [MiddleName] Name COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [LastName] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Suffix] nvarchar(10) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [EmailPromotion] int NOT NULL DEFAULT((0)),
+    [AdditionalContactInfo] xml NULL,
+    [Demographics] xml NULL,
+    [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_Person_BusinessEntityID] PRIMARY KEY ([BusinessEntityID] ASC)
 )
 
-alter table [Person].[Person] with check add constraint [FK_Person_BusinessEntity_BusinessEntityID] foreign key([BusinessEntityID]) references [Person].[BusinessEntity] ([BusinessEntityID]) alter table [Person].[Person] check constraint [FK_Person_BusinessEntity_BusinessEntityID]
+ALTER TABLE [Person].[Person] WITH CHECK ADD CONSTRAINT [FK_Person_BusinessEntity_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [Person].[BusinessEntity] ([BusinessEntityID])
+ALTER TABLE [Person].[Person] CHECK CONSTRAINT [FK_Person_BusinessEntity_BusinessEntityID]
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[Person]') AND name = 'IX_Person_LastName_FirstName_MiddleName')
+CREATE NONCLUSTERED INDEX [IX_Person_LastName_FirstName_MiddleName] ON [Person].[Person]([LastName] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Person].[Person]') and name = 'IX_Person_LastName_FirstName_MiddleName')
-create nonclustered index [IX_Person_LastName_FirstName_MiddleName] on [Person].[Person]([LastName] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[Person]') AND name = 'IX_Person_LastName_FirstName_MiddleName')
+CREATE NONCLUSTERED INDEX [IX_Person_LastName_FirstName_MiddleName] ON [Person].[Person]([FirstName] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Person].[Person]') and name = 'IX_Person_LastName_FirstName_MiddleName')
-create nonclustered index [IX_Person_LastName_FirstName_MiddleName] on [Person].[Person]([FirstName] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[Person]') AND name = 'IX_Person_LastName_FirstName_MiddleName')
+CREATE NONCLUSTERED INDEX [IX_Person_LastName_FirstName_MiddleName] ON [Person].[Person]([MiddleName] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Person].[Person]') and name = 'IX_Person_LastName_FirstName_MiddleName')
-create nonclustered index [IX_Person_LastName_FirstName_MiddleName] on [Person].[Person]([MiddleName] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Person].[Person]') and name = 'AK_Person_rowguid')
-create unique nonclustered index [AK_Person_rowguid] on [Person].[Person]([rowguid] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[Person]') AND name = 'AK_Person_rowguid')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Person_rowguid] ON [Person].[Person]([rowguid] ASC)

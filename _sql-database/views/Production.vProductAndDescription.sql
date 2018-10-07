@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[Production].[vProductAndDescription]') and type = 'V')
-drop view [Production].[vProductAndDescription]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[vProductAndDescription]') AND type = 'V')
+DROP VIEW [Production].[vProductAndDescription]
+GO
 
 CREATE VIEW [Production].[vProductAndDescription] 
 WITH SCHEMABINDING 

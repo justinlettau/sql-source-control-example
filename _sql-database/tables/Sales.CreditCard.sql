@@ -1,16 +1,14 @@
-if not exists (select * from sys.objects where object_id = object_id('[Sales].[CreditCard]') and type = 'U')
-create table [Sales].[CreditCard]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Sales].[CreditCard]') AND type = 'U')
+CREATE TABLE [Sales].[CreditCard]
 (
-    [CreditCardID] int not null identity(1, 1),
-    [CardType] nvarchar(50) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [CardNumber] nvarchar(25) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [ExpMonth] tinyint not null,
-    [ExpYear] smallint not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_CreditCard_CreditCardID] primary key ([CreditCardID] asc)
+    [CreditCardID] int NOT NULL IDENTITY(1, 1),
+    [CardType] nvarchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [CardNumber] nvarchar(25) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [ExpMonth] tinyint NOT NULL,
+    [ExpYear] smallint NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_CreditCard_CreditCardID] PRIMARY KEY ([CreditCardID] ASC)
 )
 
-
-
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[CreditCard]') and name = 'AK_CreditCard_CardNumber')
-create unique nonclustered index [AK_CreditCard_CardNumber] on [Sales].[CreditCard]([CardNumber] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[CreditCard]') AND name = 'AK_CreditCard_CardNumber')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_CreditCard_CardNumber] ON [Sales].[CreditCard]([CardNumber] ASC)

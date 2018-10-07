@@ -1,26 +1,27 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[WorkOrderRouting]') and type = 'U')
-create table [Production].[WorkOrderRouting]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[WorkOrderRouting]') AND type = 'U')
+CREATE TABLE [Production].[WorkOrderRouting]
 (
-    [WorkOrderID] int not null,
-    [ProductID] int not null,
-    [OperationSequence] smallint not null,
-    [LocationID] smallint not null,
-    [ScheduledStartDate] datetime not null,
-    [ScheduledEndDate] datetime not null,
-    [ActualStartDate] datetime null,
-    [ActualEndDate] datetime null,
-    [ActualResourceHrs] decimal(9, 4) null,
-    [PlannedCost] money not null,
-    [ActualCost] money null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence] primary key ([WorkOrderID] asc)
-    constraint [PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence] primary key ([ProductID] asc)
-    constraint [PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence] primary key ([OperationSequence] asc)
+    [WorkOrderID] int NOT NULL,
+    [ProductID] int NOT NULL,
+    [OperationSequence] smallint NOT NULL,
+    [LocationID] smallint NOT NULL,
+    [ScheduledStartDate] datetime NOT NULL,
+    [ScheduledEndDate] datetime NOT NULL,
+    [ActualStartDate] datetime NULL,
+    [ActualEndDate] datetime NULL,
+    [ActualResourceHrs] decimal(9, 4) NULL,
+    [PlannedCost] money NOT NULL,
+    [ActualCost] money NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence] PRIMARY KEY ([WorkOrderID] ASC)
+    CONSTRAINT [PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence] PRIMARY KEY ([ProductID] ASC)
+    CONSTRAINT [PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence] PRIMARY KEY ([OperationSequence] ASC)
 )
 
-alter table [Production].[WorkOrderRouting] with check add constraint [FK_WorkOrderRouting_Location_LocationID] foreign key([LocationID]) references [Production].[Location] ([LocationID]) alter table [Production].[WorkOrderRouting] check constraint [FK_WorkOrderRouting_Location_LocationID]
-alter table [Production].[WorkOrderRouting] with check add constraint [FK_WorkOrderRouting_WorkOrder_WorkOrderID] foreign key([WorkOrderID]) references [Production].[WorkOrder] ([WorkOrderID]) alter table [Production].[WorkOrderRouting] check constraint [FK_WorkOrderRouting_WorkOrder_WorkOrderID]
+ALTER TABLE [Production].[WorkOrderRouting] WITH CHECK ADD CONSTRAINT [FK_WorkOrderRouting_Location_LocationID] FOREIGN KEY ([LocationID]) REFERENCES [Production].[Location] ([LocationID])
+ALTER TABLE [Production].[WorkOrderRouting] CHECK CONSTRAINT [FK_WorkOrderRouting_Location_LocationID]
+ALTER TABLE [Production].[WorkOrderRouting] WITH CHECK ADD CONSTRAINT [FK_WorkOrderRouting_WorkOrder_WorkOrderID] FOREIGN KEY ([WorkOrderID]) REFERENCES [Production].[WorkOrder] ([WorkOrderID])
+ALTER TABLE [Production].[WorkOrderRouting] CHECK CONSTRAINT [FK_WorkOrderRouting_WorkOrder_WorkOrderID]
 
-
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[WorkOrderRouting]') and name = 'IX_WorkOrderRouting_ProductID')
-create nonclustered index [IX_WorkOrderRouting_ProductID] on [Production].[WorkOrderRouting]([ProductID] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[WorkOrderRouting]') AND name = 'IX_WorkOrderRouting_ProductID')
+CREATE NONCLUSTERED INDEX [IX_WorkOrderRouting_ProductID] ON [Production].[WorkOrderRouting]([ProductID] ASC)

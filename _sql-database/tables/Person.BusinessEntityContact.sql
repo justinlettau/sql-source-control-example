@@ -1,26 +1,28 @@
-if not exists (select * from sys.objects where object_id = object_id('[Person].[BusinessEntityContact]') and type = 'U')
-create table [Person].[BusinessEntityContact]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Person].[BusinessEntityContact]') AND type = 'U')
+CREATE TABLE [Person].[BusinessEntityContact]
 (
-    [BusinessEntityID] int not null,
-    [PersonID] int not null,
-    [ContactTypeID] int not null,
-    [rowguid] uniqueidentifier not null default(newid()),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_BusinessEntityContact_BusinessEntityID_PersonID_ContactTypeID] primary key ([BusinessEntityID] asc)
-    constraint [PK_BusinessEntityContact_BusinessEntityID_PersonID_ContactTypeID] primary key ([PersonID] asc)
-    constraint [PK_BusinessEntityContact_BusinessEntityID_PersonID_ContactTypeID] primary key ([ContactTypeID] asc)
+    [BusinessEntityID] int NOT NULL,
+    [PersonID] int NOT NULL,
+    [ContactTypeID] int NOT NULL,
+    [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_BusinessEntityContact_BusinessEntityID_PersonID_ContactTypeID] PRIMARY KEY ([BusinessEntityID] ASC)
+    CONSTRAINT [PK_BusinessEntityContact_BusinessEntityID_PersonID_ContactTypeID] PRIMARY KEY ([PersonID] ASC)
+    CONSTRAINT [PK_BusinessEntityContact_BusinessEntityID_PersonID_ContactTypeID] PRIMARY KEY ([ContactTypeID] ASC)
 )
 
-alter table [Person].[BusinessEntityContact] with check add constraint [FK_BusinessEntityContact_Person_PersonID] foreign key([PersonID]) references [Person].[Person] ([BusinessEntityID]) alter table [Person].[BusinessEntityContact] check constraint [FK_BusinessEntityContact_Person_PersonID]
-alter table [Person].[BusinessEntityContact] with check add constraint [FK_BusinessEntityContact_BusinessEntity_BusinessEntityID] foreign key([BusinessEntityID]) references [Person].[BusinessEntity] ([BusinessEntityID]) alter table [Person].[BusinessEntityContact] check constraint [FK_BusinessEntityContact_BusinessEntity_BusinessEntityID]
-alter table [Person].[BusinessEntityContact] with check add constraint [FK_BusinessEntityContact_ContactType_ContactTypeID] foreign key([ContactTypeID]) references [Person].[ContactType] ([ContactTypeID]) alter table [Person].[BusinessEntityContact] check constraint [FK_BusinessEntityContact_ContactType_ContactTypeID]
+ALTER TABLE [Person].[BusinessEntityContact] WITH CHECK ADD CONSTRAINT [FK_BusinessEntityContact_Person_PersonID] FOREIGN KEY ([PersonID]) REFERENCES [Person].[Person] ([BusinessEntityID])
+ALTER TABLE [Person].[BusinessEntityContact] CHECK CONSTRAINT [FK_BusinessEntityContact_Person_PersonID]
+ALTER TABLE [Person].[BusinessEntityContact] WITH CHECK ADD CONSTRAINT [FK_BusinessEntityContact_BusinessEntity_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [Person].[BusinessEntity] ([BusinessEntityID])
+ALTER TABLE [Person].[BusinessEntityContact] CHECK CONSTRAINT [FK_BusinessEntityContact_BusinessEntity_BusinessEntityID]
+ALTER TABLE [Person].[BusinessEntityContact] WITH CHECK ADD CONSTRAINT [FK_BusinessEntityContact_ContactType_ContactTypeID] FOREIGN KEY ([ContactTypeID]) REFERENCES [Person].[ContactType] ([ContactTypeID])
+ALTER TABLE [Person].[BusinessEntityContact] CHECK CONSTRAINT [FK_BusinessEntityContact_ContactType_ContactTypeID]
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[BusinessEntityContact]') AND name = 'AK_BusinessEntityContact_rowguid')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_BusinessEntityContact_rowguid] ON [Person].[BusinessEntityContact]([rowguid] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Person].[BusinessEntityContact]') and name = 'AK_BusinessEntityContact_rowguid')
-create unique nonclustered index [AK_BusinessEntityContact_rowguid] on [Person].[BusinessEntityContact]([rowguid] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[BusinessEntityContact]') AND name = 'IX_BusinessEntityContact_PersonID')
+CREATE NONCLUSTERED INDEX [IX_BusinessEntityContact_PersonID] ON [Person].[BusinessEntityContact]([PersonID] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Person].[BusinessEntityContact]') and name = 'IX_BusinessEntityContact_PersonID')
-create nonclustered index [IX_BusinessEntityContact_PersonID] on [Person].[BusinessEntityContact]([PersonID] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Person].[BusinessEntityContact]') and name = 'IX_BusinessEntityContact_ContactTypeID')
-create nonclustered index [IX_BusinessEntityContact_ContactTypeID] on [Person].[BusinessEntityContact]([ContactTypeID] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[BusinessEntityContact]') AND name = 'IX_BusinessEntityContact_ContactTypeID')
+CREATE NONCLUSTERED INDEX [IX_BusinessEntityContact_ContactTypeID] ON [Person].[BusinessEntityContact]([ContactTypeID] ASC)

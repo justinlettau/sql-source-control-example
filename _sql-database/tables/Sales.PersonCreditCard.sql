@@ -1,12 +1,14 @@
-if not exists (select * from sys.objects where object_id = object_id('[Sales].[PersonCreditCard]') and type = 'U')
-create table [Sales].[PersonCreditCard]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Sales].[PersonCreditCard]') AND type = 'U')
+CREATE TABLE [Sales].[PersonCreditCard]
 (
-    [BusinessEntityID] int not null,
-    [CreditCardID] int not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_PersonCreditCard_BusinessEntityID_CreditCardID] primary key ([BusinessEntityID] asc)
-    constraint [PK_PersonCreditCard_BusinessEntityID_CreditCardID] primary key ([CreditCardID] asc)
+    [BusinessEntityID] int NOT NULL,
+    [CreditCardID] int NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_PersonCreditCard_BusinessEntityID_CreditCardID] PRIMARY KEY ([BusinessEntityID] ASC)
+    CONSTRAINT [PK_PersonCreditCard_BusinessEntityID_CreditCardID] PRIMARY KEY ([CreditCardID] ASC)
 )
 
-alter table [Person].[PersonCreditCard] with check add constraint [FK_PersonCreditCard_Person_BusinessEntityID] foreign key([BusinessEntityID]) references [Person].[Person] ([BusinessEntityID]) alter table [Person].[PersonCreditCard] check constraint [FK_PersonCreditCard_Person_BusinessEntityID]
-alter table [Sales].[PersonCreditCard] with check add constraint [FK_PersonCreditCard_CreditCard_CreditCardID] foreign key([CreditCardID]) references [Sales].[CreditCard] ([CreditCardID]) alter table [Sales].[PersonCreditCard] check constraint [FK_PersonCreditCard_CreditCard_CreditCardID]
+ALTER TABLE [Person].[PersonCreditCard] WITH CHECK ADD CONSTRAINT [FK_PersonCreditCard_Person_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [Person].[Person] ([BusinessEntityID])
+ALTER TABLE [Person].[PersonCreditCard] CHECK CONSTRAINT [FK_PersonCreditCard_Person_BusinessEntityID]
+ALTER TABLE [Sales].[PersonCreditCard] WITH CHECK ADD CONSTRAINT [FK_PersonCreditCard_CreditCard_CreditCardID] FOREIGN KEY ([CreditCardID]) REFERENCES [Sales].[CreditCard] ([CreditCardID])
+ALTER TABLE [Sales].[PersonCreditCard] CHECK CONSTRAINT [FK_PersonCreditCard_CreditCard_CreditCardID]

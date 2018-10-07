@@ -1,22 +1,24 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[BillOfMaterials]') and type = 'U')
-create table [Production].[BillOfMaterials]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[BillOfMaterials]') AND type = 'U')
+CREATE TABLE [Production].[BillOfMaterials]
 (
-    [BillOfMaterialsID] int not null identity(1, 1),
-    [ProductAssemblyID] int null,
-    [ComponentID] int not null,
-    [StartDate] datetime not null default(getdate()),
-    [EndDate] datetime null,
-    [UnitMeasureCode] nchar(3) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [BOMLevel] smallint not null,
-    [PerAssemblyQty] decimal(8, 2) not null default((1.00)),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_BillOfMaterials_BillOfMaterialsID] primary key ([BillOfMaterialsID] asc)
+    [BillOfMaterialsID] int NOT NULL IDENTITY(1, 1),
+    [ProductAssemblyID] int NULL,
+    [ComponentID] int NOT NULL,
+    [StartDate] datetime NOT NULL DEFAULT(getdate()),
+    [EndDate] datetime NULL,
+    [UnitMeasureCode] nchar(3) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [BOMLevel] smallint NOT NULL,
+    [PerAssemblyQty] decimal(8, 2) NOT NULL DEFAULT((1.00)),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_BillOfMaterials_BillOfMaterialsID] PRIMARY KEY ([BillOfMaterialsID] ASC)
 )
 
-alter table [Production].[BillOfMaterials] with check add constraint [FK_BillOfMaterials_Product_ProductAssemblyID] foreign key([ProductAssemblyID]) references [Production].[Product] ([ProductID]) alter table [Production].[BillOfMaterials] check constraint [FK_BillOfMaterials_Product_ProductAssemblyID]
-alter table [Production].[BillOfMaterials] with check add constraint [FK_BillOfMaterials_Product_ComponentID] foreign key([ComponentID]) references [Production].[Product] ([ProductID]) alter table [Production].[BillOfMaterials] check constraint [FK_BillOfMaterials_Product_ComponentID]
-alter table [Production].[BillOfMaterials] with check add constraint [FK_BillOfMaterials_UnitMeasure_UnitMeasureCode] foreign key([UnitMeasureCode]) references [Production].[UnitMeasure] ([UnitMeasureCode]) alter table [Production].[BillOfMaterials] check constraint [FK_BillOfMaterials_UnitMeasure_UnitMeasureCode]
+ALTER TABLE [Production].[BillOfMaterials] WITH CHECK ADD CONSTRAINT [FK_BillOfMaterials_Product_ProductAssemblyID] FOREIGN KEY ([ProductAssemblyID]) REFERENCES [Production].[Product] ([ProductID])
+ALTER TABLE [Production].[BillOfMaterials] CHECK CONSTRAINT [FK_BillOfMaterials_Product_ProductAssemblyID]
+ALTER TABLE [Production].[BillOfMaterials] WITH CHECK ADD CONSTRAINT [FK_BillOfMaterials_Product_ComponentID] FOREIGN KEY ([ComponentID]) REFERENCES [Production].[Product] ([ProductID])
+ALTER TABLE [Production].[BillOfMaterials] CHECK CONSTRAINT [FK_BillOfMaterials_Product_ComponentID]
+ALTER TABLE [Production].[BillOfMaterials] WITH CHECK ADD CONSTRAINT [FK_BillOfMaterials_UnitMeasure_UnitMeasureCode] FOREIGN KEY ([UnitMeasureCode]) REFERENCES [Production].[UnitMeasure] ([UnitMeasureCode])
+ALTER TABLE [Production].[BillOfMaterials] CHECK CONSTRAINT [FK_BillOfMaterials_UnitMeasure_UnitMeasureCode]
 
-
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[BillOfMaterials]') and name = 'IX_BillOfMaterials_UnitMeasureCode')
-create nonclustered index [IX_BillOfMaterials_UnitMeasureCode] on [Production].[BillOfMaterials]([UnitMeasureCode] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[BillOfMaterials]') AND name = 'IX_BillOfMaterials_UnitMeasureCode')
+CREATE NONCLUSTERED INDEX [IX_BillOfMaterials_UnitMeasureCode] ON [Production].[BillOfMaterials]([UnitMeasureCode] ASC)

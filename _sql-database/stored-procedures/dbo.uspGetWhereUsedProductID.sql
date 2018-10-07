@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[dbo].[uspGetWhereUsedProductID]') and type = 'P')
-drop procedure [dbo].[uspGetWhereUsedProductID]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[dbo].[uspGetWhereUsedProductID]') AND type = 'P')
+DROP PROCEDURE [dbo].[uspGetWhereUsedProductID]
+GO
 
 CREATE PROCEDURE [dbo].[uspGetWhereUsedProductID]
     @StartProductID [int],

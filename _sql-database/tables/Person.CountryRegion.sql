@@ -1,13 +1,11 @@
-if not exists (select * from sys.objects where object_id = object_id('[Person].[CountryRegion]') and type = 'U')
-create table [Person].[CountryRegion]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Person].[CountryRegion]') AND type = 'U')
+CREATE TABLE [Person].[CountryRegion]
 (
-    [CountryRegionCode] nvarchar(3) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [Name] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_CountryRegion_CountryRegionCode] primary key ([CountryRegionCode] asc)
+    [CountryRegionCode] nvarchar(3) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_CountryRegion_CountryRegionCode] PRIMARY KEY ([CountryRegionCode] ASC)
 )
 
-
-
-if not exists (select * from sys.indexes where object_id = object_id('[Person].[CountryRegion]') and name = 'AK_CountryRegion_Name')
-create unique nonclustered index [AK_CountryRegion_Name] on [Person].[CountryRegion]([Name] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[CountryRegion]') AND name = 'AK_CountryRegion_Name')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_CountryRegion_Name] ON [Person].[CountryRegion]([Name] ASC)

@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[HumanResources].[dEmployee]') and type = 'TR')
-drop trigger [HumanResources].[dEmployee]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[HumanResources].[dEmployee]') AND type = 'TR')
+DROP TRIGGER [HumanResources].[dEmployee]
+GO
 
 CREATE TRIGGER [HumanResources].[dEmployee] ON [HumanResources].[Employee] 
 INSTEAD OF DELETE NOT FOR REPLICATION AS 

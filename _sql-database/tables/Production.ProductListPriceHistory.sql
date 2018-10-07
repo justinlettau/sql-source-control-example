@@ -1,13 +1,14 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[ProductListPriceHistory]') and type = 'U')
-create table [Production].[ProductListPriceHistory]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[ProductListPriceHistory]') AND type = 'U')
+CREATE TABLE [Production].[ProductListPriceHistory]
 (
-    [ProductID] int not null,
-    [StartDate] datetime not null,
-    [EndDate] datetime null,
-    [ListPrice] money not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_ProductListPriceHistory_ProductID_StartDate] primary key ([ProductID] asc)
-    constraint [PK_ProductListPriceHistory_ProductID_StartDate] primary key ([StartDate] asc)
+    [ProductID] int NOT NULL,
+    [StartDate] datetime NOT NULL,
+    [EndDate] datetime NULL,
+    [ListPrice] money NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_ProductListPriceHistory_ProductID_StartDate] PRIMARY KEY ([ProductID] ASC)
+    CONSTRAINT [PK_ProductListPriceHistory_ProductID_StartDate] PRIMARY KEY ([StartDate] ASC)
 )
 
-alter table [Production].[ProductListPriceHistory] with check add constraint [FK_ProductListPriceHistory_Product_ProductID] foreign key([ProductID]) references [Production].[Product] ([ProductID]) alter table [Production].[ProductListPriceHistory] check constraint [FK_ProductListPriceHistory_Product_ProductID]
+ALTER TABLE [Production].[ProductListPriceHistory] WITH CHECK ADD CONSTRAINT [FK_ProductListPriceHistory_Product_ProductID] FOREIGN KEY ([ProductID]) REFERENCES [Production].[Product] ([ProductID])
+ALTER TABLE [Production].[ProductListPriceHistory] CHECK CONSTRAINT [FK_ProductListPriceHistory_Product_ProductID]

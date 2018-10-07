@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[dbo].[uspSearchCandidateResumes]') and type = 'P')
-drop procedure [dbo].[uspSearchCandidateResumes]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[dbo].[uspSearchCandidateResumes]') AND type = 'P')
+DROP PROCEDURE [dbo].[uspSearchCandidateResumes]
+GO
 
 --A stored procedure which demonstrates integrated full text search
 

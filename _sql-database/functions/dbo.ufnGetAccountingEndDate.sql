@@ -1,7 +1,6 @@
-if exists (select * from sys.objects where object_id = object_id('[dbo].[ufnGetAccountingEndDate]') and type = 'FN')
-drop function [dbo].[ufnGetAccountingEndDate]
-go
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[dbo].[ufnGetAccountingEndDate]') AND type = 'FN')
+DROP FUNCTION [dbo].[ufnGetAccountingEndDate]
+GO
 
 CREATE FUNCTION [dbo].[ufnGetAccountingEndDate]()
 RETURNS [datetime] 

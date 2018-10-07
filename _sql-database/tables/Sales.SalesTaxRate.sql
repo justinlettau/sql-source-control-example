@@ -1,24 +1,24 @@
-if not exists (select * from sys.objects where object_id = object_id('[Sales].[SalesTaxRate]') and type = 'U')
-create table [Sales].[SalesTaxRate]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Sales].[SalesTaxRate]') AND type = 'U')
+CREATE TABLE [Sales].[SalesTaxRate]
 (
-    [SalesTaxRateID] int not null identity(1, 1),
-    [StateProvinceID] int not null,
-    [TaxType] tinyint not null,
-    [TaxRate] smallmoney not null default((0.00)),
-    [Name] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [rowguid] uniqueidentifier not null default(newid()),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_SalesTaxRate_SalesTaxRateID] primary key ([SalesTaxRateID] asc)
+    [SalesTaxRateID] int NOT NULL IDENTITY(1, 1),
+    [StateProvinceID] int NOT NULL,
+    [TaxType] tinyint NOT NULL,
+    [TaxRate] smallmoney NOT NULL DEFAULT((0.00)),
+    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_SalesTaxRate_SalesTaxRateID] PRIMARY KEY ([SalesTaxRateID] ASC)
 )
 
-alter table [Person].[SalesTaxRate] with check add constraint [FK_SalesTaxRate_StateProvince_StateProvinceID] foreign key([StateProvinceID]) references [Person].[StateProvince] ([StateProvinceID]) alter table [Person].[SalesTaxRate] check constraint [FK_SalesTaxRate_StateProvince_StateProvinceID]
+ALTER TABLE [Person].[SalesTaxRate] WITH CHECK ADD CONSTRAINT [FK_SalesTaxRate_StateProvince_StateProvinceID] FOREIGN KEY ([StateProvinceID]) REFERENCES [Person].[StateProvince] ([StateProvinceID])
+ALTER TABLE [Person].[SalesTaxRate] CHECK CONSTRAINT [FK_SalesTaxRate_StateProvince_StateProvinceID]
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[SalesTaxRate]') AND name = 'AK_SalesTaxRate_StateProvinceID_TaxType')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_SalesTaxRate_StateProvinceID_TaxType] ON [Sales].[SalesTaxRate]([StateProvinceID] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[SalesTaxRate]') and name = 'AK_SalesTaxRate_StateProvinceID_TaxType')
-create unique nonclustered index [AK_SalesTaxRate_StateProvinceID_TaxType] on [Sales].[SalesTaxRate]([StateProvinceID] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[SalesTaxRate]') AND name = 'AK_SalesTaxRate_StateProvinceID_TaxType')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_SalesTaxRate_StateProvinceID_TaxType] ON [Sales].[SalesTaxRate]([TaxType] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[SalesTaxRate]') and name = 'AK_SalesTaxRate_StateProvinceID_TaxType')
-create unique nonclustered index [AK_SalesTaxRate_StateProvinceID_TaxType] on [Sales].[SalesTaxRate]([TaxType] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[SalesTaxRate]') and name = 'AK_SalesTaxRate_rowguid')
-create unique nonclustered index [AK_SalesTaxRate_rowguid] on [Sales].[SalesTaxRate]([rowguid] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[SalesTaxRate]') AND name = 'AK_SalesTaxRate_rowguid')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_SalesTaxRate_rowguid] ON [Sales].[SalesTaxRate]([rowguid] ASC)

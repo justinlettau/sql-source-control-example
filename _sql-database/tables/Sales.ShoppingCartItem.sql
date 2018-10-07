@@ -1,20 +1,20 @@
-if not exists (select * from sys.objects where object_id = object_id('[Sales].[ShoppingCartItem]') and type = 'U')
-create table [Sales].[ShoppingCartItem]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Sales].[ShoppingCartItem]') AND type = 'U')
+CREATE TABLE [Sales].[ShoppingCartItem]
 (
-    [ShoppingCartItemID] int not null identity(1, 1),
-    [ShoppingCartID] nvarchar(50) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [Quantity] int not null default((1)),
-    [ProductID] int not null,
-    [DateCreated] datetime not null default(getdate()),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_ShoppingCartItem_ShoppingCartItemID] primary key ([ShoppingCartItemID] asc)
+    [ShoppingCartItemID] int NOT NULL IDENTITY(1, 1),
+    [ShoppingCartID] nvarchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Quantity] int NOT NULL DEFAULT((1)),
+    [ProductID] int NOT NULL,
+    [DateCreated] datetime NOT NULL DEFAULT(getdate()),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_ShoppingCartItem_ShoppingCartItemID] PRIMARY KEY ([ShoppingCartItemID] ASC)
 )
 
-alter table [Production].[ShoppingCartItem] with check add constraint [FK_ShoppingCartItem_Product_ProductID] foreign key([ProductID]) references [Production].[Product] ([ProductID]) alter table [Production].[ShoppingCartItem] check constraint [FK_ShoppingCartItem_Product_ProductID]
+ALTER TABLE [Production].[ShoppingCartItem] WITH CHECK ADD CONSTRAINT [FK_ShoppingCartItem_Product_ProductID] FOREIGN KEY ([ProductID]) REFERENCES [Production].[Product] ([ProductID])
+ALTER TABLE [Production].[ShoppingCartItem] CHECK CONSTRAINT [FK_ShoppingCartItem_Product_ProductID]
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[ShoppingCartItem]') AND name = 'IX_ShoppingCartItem_ShoppingCartID_ProductID')
+CREATE NONCLUSTERED INDEX [IX_ShoppingCartItem_ShoppingCartID_ProductID] ON [Sales].[ShoppingCartItem]([ShoppingCartID] ASC)
 
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[ShoppingCartItem]') and name = 'IX_ShoppingCartItem_ShoppingCartID_ProductID')
-create nonclustered index [IX_ShoppingCartItem_ShoppingCartID_ProductID] on [Sales].[ShoppingCartItem]([ShoppingCartID] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Sales].[ShoppingCartItem]') and name = 'IX_ShoppingCartItem_ShoppingCartID_ProductID')
-create nonclustered index [IX_ShoppingCartItem_ShoppingCartID_ProductID] on [Sales].[ShoppingCartItem]([ProductID] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[ShoppingCartItem]') AND name = 'IX_ShoppingCartItem_ShoppingCartID_ProductID')
+CREATE NONCLUSTERED INDEX [IX_ShoppingCartItem_ShoppingCartID_ProductID] ON [Sales].[ShoppingCartItem]([ProductID] ASC)

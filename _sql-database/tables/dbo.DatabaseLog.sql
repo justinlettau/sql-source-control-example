@@ -1,13 +1,13 @@
-if not exists (select * from sys.objects where object_id = object_id('[dbo].[DatabaseLog]') and type = 'U')
-create table [dbo].[DatabaseLog]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[dbo].[DatabaseLog]') AND type = 'U')
+CREATE TABLE [dbo].[DatabaseLog]
 (
-    [DatabaseLogID] int not null identity(1, 1),
-    [PostTime] datetime not null,
-    [DatabaseUser] sysname collate SQL_Latin1_General_CP1_CI_AS not null,
-    [Event] sysname collate SQL_Latin1_General_CP1_CI_AS not null,
-    [Schema] sysname collate SQL_Latin1_General_CP1_CI_AS null,
-    [Object] sysname collate SQL_Latin1_General_CP1_CI_AS null,
-    [TSQL] nvarchar(max) collate SQL_Latin1_General_CP1_CI_AS not null,
-    [XmlEvent] xml not null,
-    constraint [PK_DatabaseLog_DatabaseLogID] primary key ([DatabaseLogID] asc)
+    [DatabaseLogID] int NOT NULL IDENTITY(1, 1),
+    [PostTime] datetime NOT NULL,
+    [DatabaseUser] sysname COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Event] sysname COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Schema] sysname COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [Object] sysname COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    [TSQL] nvarchar(max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [XmlEvent] xml NOT NULL,
+    CONSTRAINT [PK_DatabaseLog_DatabaseLogID] PRIMARY KEY ([DatabaseLogID] ASC)
 )

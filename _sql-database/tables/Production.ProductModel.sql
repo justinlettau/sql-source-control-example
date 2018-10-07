@@ -1,19 +1,17 @@
-if not exists (select * from sys.objects where object_id = object_id('[Production].[ProductModel]') and type = 'U')
-create table [Production].[ProductModel]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Production].[ProductModel]') AND type = 'U')
+CREATE TABLE [Production].[ProductModel]
 (
-    [ProductModelID] int not null identity(1, 1),
-    [Name] Name collate SQL_Latin1_General_CP1_CI_AS not null,
-    [CatalogDescription] xml null,
-    [Instructions] xml null,
-    [rowguid] uniqueidentifier not null default(newid()),
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_ProductModel_ProductModelID] primary key ([ProductModelID] asc)
+    [ProductModelID] int NOT NULL IDENTITY(1, 1),
+    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [CatalogDescription] xml NULL,
+    [Instructions] xml NULL,
+    [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_ProductModel_ProductModelID] PRIMARY KEY ([ProductModelID] ASC)
 )
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[ProductModel]') AND name = 'AK_ProductModel_Name')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_ProductModel_Name] ON [Production].[ProductModel]([Name] ASC)
 
-
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[ProductModel]') and name = 'AK_ProductModel_Name')
-create unique nonclustered index [AK_ProductModel_Name] on [Production].[ProductModel]([Name] asc)
-
-if not exists (select * from sys.indexes where object_id = object_id('[Production].[ProductModel]') and name = 'AK_ProductModel_rowguid')
-create unique nonclustered index [AK_ProductModel_rowguid] on [Production].[ProductModel]([rowguid] asc)
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[ProductModel]') AND name = 'AK_ProductModel_rowguid')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_ProductModel_rowguid] ON [Production].[ProductModel]([rowguid] ASC)

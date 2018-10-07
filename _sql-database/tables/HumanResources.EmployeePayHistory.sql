@@ -1,13 +1,14 @@
-if not exists (select * from sys.objects where object_id = object_id('[HumanResources].[EmployeePayHistory]') and type = 'U')
-create table [HumanResources].[EmployeePayHistory]
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[HumanResources].[EmployeePayHistory]') AND type = 'U')
+CREATE TABLE [HumanResources].[EmployeePayHistory]
 (
-    [BusinessEntityID] int not null,
-    [RateChangeDate] datetime not null,
-    [Rate] money not null,
-    [PayFrequency] tinyint not null,
-    [ModifiedDate] datetime not null default(getdate()),
-    constraint [PK_EmployeePayHistory_BusinessEntityID_RateChangeDate] primary key ([BusinessEntityID] asc)
-    constraint [PK_EmployeePayHistory_BusinessEntityID_RateChangeDate] primary key ([RateChangeDate] asc)
+    [BusinessEntityID] int NOT NULL,
+    [RateChangeDate] datetime NOT NULL,
+    [Rate] money NOT NULL,
+    [PayFrequency] tinyint NOT NULL,
+    [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
+    CONSTRAINT [PK_EmployeePayHistory_BusinessEntityID_RateChangeDate] PRIMARY KEY ([BusinessEntityID] ASC)
+    CONSTRAINT [PK_EmployeePayHistory_BusinessEntityID_RateChangeDate] PRIMARY KEY ([RateChangeDate] ASC)
 )
 
-alter table [HumanResources].[EmployeePayHistory] with check add constraint [FK_EmployeePayHistory_Employee_BusinessEntityID] foreign key([BusinessEntityID]) references [HumanResources].[Employee] ([BusinessEntityID]) alter table [HumanResources].[EmployeePayHistory] check constraint [FK_EmployeePayHistory_Employee_BusinessEntityID]
+ALTER TABLE [HumanResources].[EmployeePayHistory] WITH CHECK ADD CONSTRAINT [FK_EmployeePayHistory_Employee_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [HumanResources].[Employee] ([BusinessEntityID])
+ALTER TABLE [HumanResources].[EmployeePayHistory] CHECK CONSTRAINT [FK_EmployeePayHistory_Employee_BusinessEntityID]
