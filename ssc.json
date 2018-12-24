@@ -12,6 +12,7 @@
   "data": [
     "Person.AdressType",
     "Person.ContactType",
+    "Person.CountryRegion",
     "Person.PhoneNumberType",
     "Purchasing.ShipMethod"
   ]
