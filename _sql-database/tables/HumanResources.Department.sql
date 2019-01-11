@@ -5,7 +5,9 @@ CREATE TABLE [HumanResources].[Department]
     [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
     [GroupName] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_Department_DepartmentID] PRIMARY KEY ([DepartmentID] ASC)
+    CONSTRAINT [PK_Department_DepartmentID] PRIMARY KEY CLUSTERED (
+        [DepartmentID] ASC
+    )
 )
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[HumanResources].[Department]') AND name = 'AK_Department_Name')

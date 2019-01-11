@@ -7,5 +7,7 @@ CREATE TABLE [Production].[ProductPhoto]
     [LargePhoto] varbinary(max) NULL,
     [LargePhotoFileName] nvarchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductPhoto_ProductPhotoID] PRIMARY KEY ([ProductPhotoID] ASC)
+    CONSTRAINT [PK_ProductPhoto_ProductPhotoID] PRIMARY KEY CLUSTERED (
+        [ProductPhotoID] ASC
+    )
 )

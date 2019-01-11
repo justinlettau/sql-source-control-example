@@ -4,5 +4,7 @@ CREATE TABLE [Production].[Illustration]
     [IllustrationID] int NOT NULL IDENTITY(1, 1),
     [Diagram] xml NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_Illustration_IllustrationID] PRIMARY KEY ([IllustrationID] ASC)
+    CONSTRAINT [PK_Illustration_IllustrationID] PRIMARY KEY CLUSTERED (
+        [IllustrationID] ASC
+    )
 )

@@ -12,8 +12,10 @@ CREATE TABLE [Purchasing].[ProductVendor]
     [OnOrderQty] int NULL,
     [UnitMeasureCode] nchar(3) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductVendor_ProductID_BusinessEntityID] PRIMARY KEY ([ProductID] ASC)
-    CONSTRAINT [PK_ProductVendor_ProductID_BusinessEntityID] PRIMARY KEY ([BusinessEntityID] ASC)
+    CONSTRAINT [PK_ProductVendor_ProductID_BusinessEntityID] PRIMARY KEY CLUSTERED (
+        [ProductID] ASC,
+        [BusinessEntityID] ASC
+    )
 )
 
 ALTER TABLE [Production].[ProductVendor] WITH CHECK ADD CONSTRAINT [FK_ProductVendor_Product_ProductID] FOREIGN KEY ([ProductID]) REFERENCES [Production].[Product] ([ProductID])

@@ -10,5 +10,7 @@ CREATE TABLE [dbo].[ErrorLog]
     [ErrorProcedure] nvarchar(126) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
     [ErrorLine] int NULL,
     [ErrorMessage] nvarchar(4000) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-    CONSTRAINT [PK_ErrorLog_ErrorLogID] PRIMARY KEY ([ErrorLogID] ASC)
+    CONSTRAINT [PK_ErrorLog_ErrorLogID] PRIMARY KEY CLUSTERED (
+        [ErrorLogID] ASC
+    )
 )

@@ -10,7 +10,9 @@ CREATE TABLE [Production].[TransactionHistory]
     [Quantity] int NOT NULL,
     [ActualCost] money NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_TransactionHistory_TransactionID] PRIMARY KEY ([TransactionID] ASC)
+    CONSTRAINT [PK_TransactionHistory_TransactionID] PRIMARY KEY CLUSTERED (
+        [TransactionID] ASC
+    )
 )
 
 ALTER TABLE [Production].[TransactionHistory] WITH CHECK ADD CONSTRAINT [FK_TransactionHistory_Product_ProductID] FOREIGN KEY ([ProductID]) REFERENCES [Production].[Product] ([ProductID])

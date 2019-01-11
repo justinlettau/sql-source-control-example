@@ -6,8 +6,10 @@ CREATE TABLE [Production].[ProductListPriceHistory]
     [EndDate] datetime NULL,
     [ListPrice] money NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductListPriceHistory_ProductID_StartDate] PRIMARY KEY ([ProductID] ASC)
-    CONSTRAINT [PK_ProductListPriceHistory_ProductID_StartDate] PRIMARY KEY ([StartDate] ASC)
+    CONSTRAINT [PK_ProductListPriceHistory_ProductID_StartDate] PRIMARY KEY CLUSTERED (
+        [ProductID] ASC,
+        [StartDate] ASC
+    )
 )
 
 ALTER TABLE [Production].[ProductListPriceHistory] WITH CHECK ADD CONSTRAINT [FK_ProductListPriceHistory_Product_ProductID] FOREIGN KEY ([ProductID]) REFERENCES [Production].[Product] ([ProductID])

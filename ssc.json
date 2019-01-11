@@ -10,7 +10,7 @@
     }
   ],
   "data": [
-    "Person.AdressType",
+    "Person.AddressType",
     "Person.ContactType",
     "Person.CountryRegion",
     "Person.PhoneNumberType",

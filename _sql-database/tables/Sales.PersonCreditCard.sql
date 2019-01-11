@@ -4,8 +4,10 @@ CREATE TABLE [Sales].[PersonCreditCard]
     [BusinessEntityID] int NOT NULL,
     [CreditCardID] int NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_PersonCreditCard_BusinessEntityID_CreditCardID] PRIMARY KEY ([BusinessEntityID] ASC)
-    CONSTRAINT [PK_PersonCreditCard_BusinessEntityID_CreditCardID] PRIMARY KEY ([CreditCardID] ASC)
+    CONSTRAINT [PK_PersonCreditCard_BusinessEntityID_CreditCardID] PRIMARY KEY CLUSTERED (
+        [BusinessEntityID] ASC,
+        [CreditCardID] ASC
+    )
 )
 
 ALTER TABLE [Person].[PersonCreditCard] WITH CHECK ADD CONSTRAINT [FK_PersonCreditCard_Person_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [Person].[Person] ([BusinessEntityID])

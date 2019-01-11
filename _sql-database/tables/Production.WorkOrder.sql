@@ -11,7 +11,9 @@ CREATE TABLE [Production].[WorkOrder]
     [DueDate] datetime NOT NULL,
     [ScrapReasonID] smallint NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_WorkOrder_WorkOrderID] PRIMARY KEY ([WorkOrderID] ASC)
+    CONSTRAINT [PK_WorkOrder_WorkOrderID] PRIMARY KEY CLUSTERED (
+        [WorkOrderID] ASC
+    )
 )
 
 ALTER TABLE [Production].[WorkOrder] WITH CHECK ADD CONSTRAINT [FK_WorkOrder_Product_ProductID] FOREIGN KEY ([ProductID]) REFERENCES [Production].[Product] ([ProductID])

@@ -6,8 +6,10 @@ CREATE TABLE [HumanResources].[EmployeePayHistory]
     [Rate] money NOT NULL,
     [PayFrequency] tinyint NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_EmployeePayHistory_BusinessEntityID_RateChangeDate] PRIMARY KEY ([BusinessEntityID] ASC)
-    CONSTRAINT [PK_EmployeePayHistory_BusinessEntityID_RateChangeDate] PRIMARY KEY ([RateChangeDate] ASC)
+    CONSTRAINT [PK_EmployeePayHistory_BusinessEntityID_RateChangeDate] PRIMARY KEY CLUSTERED (
+        [BusinessEntityID] ASC,
+        [RateChangeDate] ASC
+    )
 )
 
 ALTER TABLE [HumanResources].[EmployeePayHistory] WITH CHECK ADD CONSTRAINT [FK_EmployeePayHistory_Employee_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [HumanResources].[Employee] ([BusinessEntityID])

@@ -7,7 +7,9 @@ CREATE TABLE [Sales].[ShoppingCartItem]
     [ProductID] int NOT NULL,
     [DateCreated] datetime NOT NULL DEFAULT(getdate()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ShoppingCartItem_ShoppingCartItemID] PRIMARY KEY ([ShoppingCartItemID] ASC)
+    CONSTRAINT [PK_ShoppingCartItem_ShoppingCartItemID] PRIMARY KEY CLUSTERED (
+        [ShoppingCartItemID] ASC
+    )
 )
 
 ALTER TABLE [Production].[ShoppingCartItem] WITH CHECK ADD CONSTRAINT [FK_ShoppingCartItem_Product_ProductID] FOREIGN KEY ([ProductID]) REFERENCES [Production].[Product] ([ProductID])

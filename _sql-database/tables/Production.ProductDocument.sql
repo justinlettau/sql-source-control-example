@@ -4,8 +4,10 @@ CREATE TABLE [Production].[ProductDocument]
     [ProductID] int NOT NULL,
     [DocumentNode] hierarchyid NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductDocument_ProductID_DocumentNode] PRIMARY KEY ([ProductID] ASC)
-    CONSTRAINT [PK_ProductDocument_ProductID_DocumentNode] PRIMARY KEY ([DocumentNode] ASC)
+    CONSTRAINT [PK_ProductDocument_ProductID_DocumentNode] PRIMARY KEY CLUSTERED (
+        [ProductID] ASC,
+        [DocumentNode] ASC
+    )
 )
 
 ALTER TABLE [Production].[ProductDocument] WITH CHECK ADD CONSTRAINT [FK_ProductDocument_Product_ProductID] FOREIGN KEY ([ProductID]) REFERENCES [Production].[Product] ([ProductID])

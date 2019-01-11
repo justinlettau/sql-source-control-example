@@ -7,7 +7,9 @@ CREATE TABLE [Purchasing].[ShipMethod]
     [ShipRate] money NOT NULL DEFAULT((0.00)),
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ShipMethod_ShipMethodID] PRIMARY KEY ([ShipMethodID] ASC)
+    CONSTRAINT [PK_ShipMethod_ShipMethodID] PRIMARY KEY CLUSTERED (
+        [ShipMethodID] ASC
+    )
 )
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Purchasing].[ShipMethod]') AND name = 'AK_ShipMethod_Name')

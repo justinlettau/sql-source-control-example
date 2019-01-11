@@ -5,8 +5,10 @@ CREATE TABLE [Production].[ProductProductPhoto]
     [ProductPhotoID] int NOT NULL,
     [Primary] Flag NOT NULL DEFAULT((0)),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductProductPhoto_ProductID_ProductPhotoID] PRIMARY KEY ([ProductID] ASC)
-    CONSTRAINT [PK_ProductProductPhoto_ProductID_ProductPhotoID] PRIMARY KEY ([ProductPhotoID] ASC)
+    CONSTRAINT [PK_ProductProductPhoto_ProductID_ProductPhotoID] PRIMARY KEY NONCLUSTERED (
+        [ProductID] ASC,
+        [ProductPhotoID] ASC
+    )
 )
 
 ALTER TABLE [Production].[ProductProductPhoto] WITH CHECK ADD CONSTRAINT [FK_ProductProductPhoto_Product_ProductID] FOREIGN KEY ([ProductID]) REFERENCES [Production].[Product] ([ProductID])

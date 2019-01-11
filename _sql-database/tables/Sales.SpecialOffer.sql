@@ -12,7 +12,9 @@ CREATE TABLE [Sales].[SpecialOffer]
     [MaxQty] int NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_SpecialOffer_SpecialOfferID] PRIMARY KEY ([SpecialOfferID] ASC)
+    CONSTRAINT [PK_SpecialOffer_SpecialOfferID] PRIMARY KEY CLUSTERED (
+        [SpecialOfferID] ASC
+    )
 )
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[SpecialOffer]') AND name = 'AK_SpecialOffer_rowguid')

@@ -7,10 +7,12 @@ CREATE TABLE [HumanResources].[EmployeeDepartmentHistory]
     [StartDate] date NOT NULL,
     [EndDate] date NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] PRIMARY KEY ([BusinessEntityID] ASC)
-    CONSTRAINT [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] PRIMARY KEY ([DepartmentID] ASC)
-    CONSTRAINT [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] PRIMARY KEY ([ShiftID] ASC)
-    CONSTRAINT [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] PRIMARY KEY ([StartDate] ASC)
+    CONSTRAINT [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] PRIMARY KEY CLUSTERED (
+        [BusinessEntityID] ASC,
+        [DepartmentID] ASC,
+        [ShiftID] ASC,
+        [StartDate] ASC
+    )
 )
 
 ALTER TABLE [HumanResources].[EmployeeDepartmentHistory] WITH CHECK ADD CONSTRAINT [FK_EmployeeDepartmentHistory_Shift_ShiftID] FOREIGN KEY ([ShiftID]) REFERENCES [HumanResources].[Shift] ([ShiftID])

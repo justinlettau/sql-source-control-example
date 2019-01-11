@@ -4,8 +4,10 @@ CREATE TABLE [Sales].[SalesOrderHeaderSalesReason]
     [SalesOrderID] int NOT NULL,
     [SalesReasonID] int NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_SalesOrderHeaderSalesReason_SalesOrderID_SalesReasonID] PRIMARY KEY ([SalesOrderID] ASC)
-    CONSTRAINT [PK_SalesOrderHeaderSalesReason_SalesOrderID_SalesReasonID] PRIMARY KEY ([SalesReasonID] ASC)
+    CONSTRAINT [PK_SalesOrderHeaderSalesReason_SalesOrderID_SalesReasonID] PRIMARY KEY CLUSTERED (
+        [SalesOrderID] ASC,
+        [SalesReasonID] ASC
+    )
 )
 
 ALTER TABLE [Sales].[SalesOrderHeaderSalesReason] WITH CHECK ADD CONSTRAINT [FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID] FOREIGN KEY ([SalesReasonID]) REFERENCES [Sales].[SalesReason] ([SalesReasonID])

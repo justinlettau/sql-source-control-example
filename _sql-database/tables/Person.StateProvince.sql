@@ -9,7 +9,9 @@ CREATE TABLE [Person].[StateProvince]
     [TerritoryID] int NOT NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_StateProvince_StateProvinceID] PRIMARY KEY ([StateProvinceID] ASC)
+    CONSTRAINT [PK_StateProvince_StateProvinceID] PRIMARY KEY CLUSTERED (
+        [StateProvinceID] ASC
+    )
 )
 
 ALTER TABLE [Sales].[StateProvince] WITH CHECK ADD CONSTRAINT [FK_StateProvince_SalesTerritory_TerritoryID] FOREIGN KEY ([TerritoryID]) REFERENCES [Sales].[SalesTerritory] ([TerritoryID])

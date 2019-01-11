@@ -8,7 +8,9 @@ CREATE TABLE [Sales].[SalesTaxRate]
     [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_SalesTaxRate_SalesTaxRateID] PRIMARY KEY ([SalesTaxRateID] ASC)
+    CONSTRAINT [PK_SalesTaxRate_SalesTaxRateID] PRIMARY KEY CLUSTERED (
+        [SalesTaxRateID] ASC
+    )
 )
 
 ALTER TABLE [Person].[SalesTaxRate] WITH CHECK ADD CONSTRAINT [FK_SalesTaxRate_StateProvince_StateProvinceID] FOREIGN KEY ([StateProvinceID]) REFERENCES [Person].[StateProvince] ([StateProvinceID])

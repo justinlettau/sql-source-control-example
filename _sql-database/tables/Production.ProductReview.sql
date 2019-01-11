@@ -9,7 +9,9 @@ CREATE TABLE [Production].[ProductReview]
     [Rating] int NOT NULL,
     [Comments] nvarchar(3850) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductReview_ProductReviewID] PRIMARY KEY ([ProductReviewID] ASC)
+    CONSTRAINT [PK_ProductReview_ProductReviewID] PRIMARY KEY CLUSTERED (
+        [ProductReviewID] ASC
+    )
 )
 
 ALTER TABLE [Production].[ProductReview] WITH CHECK ADD CONSTRAINT [FK_ProductReview_Product_ProductID] FOREIGN KEY ([ProductID]) REFERENCES [Production].[Product] ([ProductID])

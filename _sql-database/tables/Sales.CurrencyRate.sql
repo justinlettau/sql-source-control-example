@@ -8,7 +8,9 @@ CREATE TABLE [Sales].[CurrencyRate]
     [AverageRate] money NOT NULL,
     [EndOfDayRate] money NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_CurrencyRate_CurrencyRateID] PRIMARY KEY ([CurrencyRateID] ASC)
+    CONSTRAINT [PK_CurrencyRate_CurrencyRateID] PRIMARY KEY CLUSTERED (
+        [CurrencyRateID] ASC
+    )
 )
 
 ALTER TABLE [Sales].[CurrencyRate] WITH CHECK ADD CONSTRAINT [FK_CurrencyRate_Currency_FromCurrencyCode] FOREIGN KEY ([FromCurrencyCode]) REFERENCES [Sales].[Currency] ([CurrencyCode])

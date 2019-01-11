@@ -8,7 +8,9 @@ CREATE TABLE [Sales].[Customer]
     [AccountNumber] AS (isnull('AW'+[dbo].[ufnLeadingZeros]([CustomerID]),'')),
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_Customer_CustomerID] PRIMARY KEY ([CustomerID] ASC)
+    CONSTRAINT [PK_Customer_CustomerID] PRIMARY KEY CLUSTERED (
+        [CustomerID] ASC
+    )
 )
 
 ALTER TABLE [Person].[Customer] WITH CHECK ADD CONSTRAINT [FK_Customer_Person_PersonID] FOREIGN KEY ([PersonID]) REFERENCES [Person].[Person] ([BusinessEntityID])

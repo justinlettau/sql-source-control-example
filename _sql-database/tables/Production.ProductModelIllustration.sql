@@ -4,8 +4,10 @@ CREATE TABLE [Production].[ProductModelIllustration]
     [ProductModelID] int NOT NULL,
     [IllustrationID] int NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductModelIllustration_ProductModelID_IllustrationID] PRIMARY KEY ([ProductModelID] ASC)
-    CONSTRAINT [PK_ProductModelIllustration_ProductModelID_IllustrationID] PRIMARY KEY ([IllustrationID] ASC)
+    CONSTRAINT [PK_ProductModelIllustration_ProductModelID_IllustrationID] PRIMARY KEY CLUSTERED (
+        [ProductModelID] ASC,
+        [IllustrationID] ASC
+    )
 )
 
 ALTER TABLE [Production].[ProductModelIllustration] WITH CHECK ADD CONSTRAINT [FK_ProductModelIllustration_Illustration_IllustrationID] FOREIGN KEY ([IllustrationID]) REFERENCES [Production].[Illustration] ([IllustrationID])

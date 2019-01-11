@@ -7,7 +7,9 @@ CREATE TABLE [Sales].[Store]
     [Demographics] xml NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_Store_BusinessEntityID] PRIMARY KEY ([BusinessEntityID] ASC)
+    CONSTRAINT [PK_Store_BusinessEntityID] PRIMARY KEY CLUSTERED (
+        [BusinessEntityID] ASC
+    )
 )
 
 ALTER TABLE [Sales].[Store] WITH CHECK ADD CONSTRAINT [FK_Store_SalesPerson_SalesPersonID] FOREIGN KEY ([SalesPersonID]) REFERENCES [Sales].[SalesPerson] ([BusinessEntityID])

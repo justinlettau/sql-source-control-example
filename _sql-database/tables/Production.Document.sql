@@ -15,7 +15,9 @@ CREATE TABLE [Production].[Document]
     [Document] varbinary(max) NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_Document_DocumentNode] PRIMARY KEY ([DocumentNode] ASC)
+    CONSTRAINT [PK_Document_DocumentNode] PRIMARY KEY CLUSTERED (
+        [DocumentNode] ASC
+    )
 )
 
 ALTER TABLE [HumanResources].[Document] WITH CHECK ADD CONSTRAINT [FK_Document_Employee_Owner] FOREIGN KEY ([Owner]) REFERENCES [HumanResources].[Employee] ([BusinessEntityID])

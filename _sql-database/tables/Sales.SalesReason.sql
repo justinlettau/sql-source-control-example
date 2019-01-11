@@ -5,5 +5,7 @@ CREATE TABLE [Sales].[SalesReason]
     [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
     [ReasonType] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_SalesReason_SalesReasonID] PRIMARY KEY ([SalesReasonID] ASC)
+    CONSTRAINT [PK_SalesReason_SalesReasonID] PRIMARY KEY CLUSTERED (
+        [SalesReasonID] ASC
+    )
 )

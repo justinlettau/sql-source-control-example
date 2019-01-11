@@ -14,7 +14,9 @@ CREATE TABLE [Purchasing].[PurchaseOrderHeader]
     [Freight] money NOT NULL DEFAULT((0.00)),
     [TotalDue] AS (isnull(([SubTotal]+[TaxAmt])+[Freight],(0))),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_PurchaseOrderHeader_PurchaseOrderID] PRIMARY KEY ([PurchaseOrderID] ASC)
+    CONSTRAINT [PK_PurchaseOrderHeader_PurchaseOrderID] PRIMARY KEY CLUSTERED (
+        [PurchaseOrderID] ASC
+    )
 )
 
 ALTER TABLE [Purchasing].[PurchaseOrderHeader] WITH CHECK ADD CONSTRAINT [FK_PurchaseOrderHeader_ShipMethod_ShipMethodID] FOREIGN KEY ([ShipMethodID]) REFERENCES [Purchasing].[ShipMethod] ([ShipMethodID])

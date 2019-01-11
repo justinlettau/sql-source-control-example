@@ -10,7 +10,9 @@ CREATE TABLE [Person].[Address]
     [SpatialLocation] geography NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_Address_AddressID] PRIMARY KEY ([AddressID] ASC)
+    CONSTRAINT [PK_Address_AddressID] PRIMARY KEY CLUSTERED (
+        [AddressID] ASC
+    )
 )
 
 ALTER TABLE [Person].[Address] WITH CHECK ADD CONSTRAINT [FK_Address_StateProvince_StateProvinceID] FOREIGN KEY ([StateProvinceID]) REFERENCES [Person].[StateProvince] ([StateProvinceID])

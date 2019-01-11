@@ -6,7 +6,9 @@ CREATE TABLE [HumanResources].[Shift]
     [StartTime] time NOT NULL,
     [EndTime] time NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_Shift_ShiftID] PRIMARY KEY ([ShiftID] ASC)
+    CONSTRAINT [PK_Shift_ShiftID] PRIMARY KEY CLUSTERED (
+        [ShiftID] ASC
+    )
 )
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[HumanResources].[Shift]') AND name = 'AK_Shift_Name')

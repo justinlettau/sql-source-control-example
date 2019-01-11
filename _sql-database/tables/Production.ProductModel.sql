@@ -7,7 +7,9 @@ CREATE TABLE [Production].[ProductModel]
     [Instructions] xml NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductModel_ProductModelID] PRIMARY KEY ([ProductModelID] ASC)
+    CONSTRAINT [PK_ProductModel_ProductModelID] PRIMARY KEY CLUSTERED (
+        [ProductModelID] ASC
+    )
 )
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[ProductModel]') AND name = 'AK_ProductModel_Name')

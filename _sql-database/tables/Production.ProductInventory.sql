@@ -8,8 +8,10 @@ CREATE TABLE [Production].[ProductInventory]
     [Quantity] smallint NOT NULL DEFAULT((0)),
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductInventory_ProductID_LocationID] PRIMARY KEY ([ProductID] ASC)
-    CONSTRAINT [PK_ProductInventory_ProductID_LocationID] PRIMARY KEY ([LocationID] ASC)
+    CONSTRAINT [PK_ProductInventory_ProductID_LocationID] PRIMARY KEY CLUSTERED (
+        [ProductID] ASC,
+        [LocationID] ASC
+    )
 )
 
 ALTER TABLE [Production].[ProductInventory] WITH CHECK ADD CONSTRAINT [FK_ProductInventory_Location_LocationID] FOREIGN KEY ([LocationID]) REFERENCES [Production].[Location] ([LocationID])

@@ -26,7 +26,9 @@ CREATE TABLE [Production].[Product]
     [DiscontinuedDate] datetime NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_Product_ProductID] PRIMARY KEY ([ProductID] ASC)
+    CONSTRAINT [PK_Product_ProductID] PRIMARY KEY CLUSTERED (
+        [ProductID] ASC
+    )
 )
 
 ALTER TABLE [Production].[Product] WITH CHECK ADD CONSTRAINT [FK_Product_ProductModel_ProductModelID] FOREIGN KEY ([ProductModelID]) REFERENCES [Production].[ProductModel] ([ProductModelID])

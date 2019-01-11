@@ -5,7 +5,9 @@ CREATE TABLE [Person].[AddressType]
     [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_AddressType_AddressTypeID] PRIMARY KEY ([AddressTypeID] ASC)
+    CONSTRAINT [PK_AddressType_AddressTypeID] PRIMARY KEY CLUSTERED (
+        [AddressTypeID] ASC
+    )
 )
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[AddressType]') AND name = 'AK_AddressType_rowguid')

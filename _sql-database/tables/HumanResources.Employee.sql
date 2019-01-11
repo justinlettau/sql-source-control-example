@@ -17,7 +17,9 @@ CREATE TABLE [HumanResources].[Employee]
     [CurrentFlag] Flag NOT NULL DEFAULT((1)),
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_Employee_BusinessEntityID] PRIMARY KEY ([BusinessEntityID] ASC)
+    CONSTRAINT [PK_Employee_BusinessEntityID] PRIMARY KEY CLUSTERED (
+        [BusinessEntityID] ASC
+    )
 )
 
 ALTER TABLE [Person].[Employee] WITH CHECK ADD CONSTRAINT [FK_Employee_Person_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [Person].[Person] ([BusinessEntityID])

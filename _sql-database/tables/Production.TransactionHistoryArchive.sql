@@ -10,7 +10,9 @@ CREATE TABLE [Production].[TransactionHistoryArchive]
     [Quantity] int NOT NULL,
     [ActualCost] money NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_TransactionHistoryArchive_TransactionID] PRIMARY KEY ([TransactionID] ASC)
+    CONSTRAINT [PK_TransactionHistoryArchive_TransactionID] PRIMARY KEY CLUSTERED (
+        [TransactionID] ASC
+    )
 )
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[TransactionHistoryArchive]') AND name = 'IX_TransactionHistoryArchive_ProductID')

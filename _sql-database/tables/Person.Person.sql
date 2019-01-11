@@ -14,7 +14,9 @@ CREATE TABLE [Person].[Person]
     [Demographics] xml NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_Person_BusinessEntityID] PRIMARY KEY ([BusinessEntityID] ASC)
+    CONSTRAINT [PK_Person_BusinessEntityID] PRIMARY KEY CLUSTERED (
+        [BusinessEntityID] ASC
+    )
 )
 
 ALTER TABLE [Person].[Person] WITH CHECK ADD CONSTRAINT [FK_Person_BusinessEntity_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [Person].[BusinessEntity] ([BusinessEntityID])
