@@ -12,7 +12,8 @@ CREATE TABLE [Purchasing].[ProductVendor]
     [OnOrderQty] int NULL,
     [UnitMeasureCode] nchar(3) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductVendor_ProductID_BusinessEntityID] PRIMARY KEY CLUSTERED (
+    CONSTRAINT [PK_ProductVendor_ProductID_BusinessEntityID] PRIMARY KEY CLUSTERED 
+    (
         [ProductID] ASC,
         [BusinessEntityID] ASC
     )

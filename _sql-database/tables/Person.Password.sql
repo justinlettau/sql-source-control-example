@@ -6,9 +6,7 @@ CREATE TABLE [Person].[Password]
     [PasswordSalt] varchar(10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_Password_BusinessEntityID] PRIMARY KEY CLUSTERED (
-        [BusinessEntityID] ASC
-    )
+    CONSTRAINT [PK_Password_BusinessEntityID] PRIMARY KEY CLUSTERED ([BusinessEntityID] ASC)
 )
 
 ALTER TABLE [Person].[Password] WITH CHECK ADD CONSTRAINT [FK_Password_Person_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [Person].[Person] ([BusinessEntityID])

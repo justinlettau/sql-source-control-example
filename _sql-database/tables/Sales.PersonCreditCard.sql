@@ -4,7 +4,8 @@ CREATE TABLE [Sales].[PersonCreditCard]
     [BusinessEntityID] int NOT NULL,
     [CreditCardID] int NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_PersonCreditCard_BusinessEntityID_CreditCardID] PRIMARY KEY CLUSTERED (
+    CONSTRAINT [PK_PersonCreditCard_BusinessEntityID_CreditCardID] PRIMARY KEY CLUSTERED 
+    (
         [BusinessEntityID] ASC,
         [CreditCardID] ASC
     )

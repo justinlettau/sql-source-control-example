@@ -12,7 +12,8 @@ CREATE TABLE [Sales].[SalesOrderDetail]
     [LineTotal] AS (isnull(([UnitPrice]*((1.0)-[UnitPriceDiscount]))*[OrderQty],(0.0))),
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID] PRIMARY KEY CLUSTERED (
+    CONSTRAINT [PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID] PRIMARY KEY CLUSTERED 
+    (
         [SalesOrderID] ASC,
         [SalesOrderDetailID] ASC
     )

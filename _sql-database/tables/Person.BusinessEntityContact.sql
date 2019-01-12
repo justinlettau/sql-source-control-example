@@ -6,7 +6,8 @@ CREATE TABLE [Person].[BusinessEntityContact]
     [ContactTypeID] int NOT NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_BusinessEntityContact_BusinessEntityID_PersonID_ContactTypeID] PRIMARY KEY CLUSTERED (
+    CONSTRAINT [PK_BusinessEntityContact_BusinessEntityID_PersonID_ContactTypeID] PRIMARY KEY CLUSTERED 
+    (
         [BusinessEntityID] ASC,
         [PersonID] ASC,
         [ContactTypeID] ASC

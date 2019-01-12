@@ -10,9 +10,7 @@ CREATE TABLE [Production].[BillOfMaterials]
     [BOMLevel] smallint NOT NULL,
     [PerAssemblyQty] decimal(8, 2) NOT NULL DEFAULT((1.00)),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_BillOfMaterials_BillOfMaterialsID] PRIMARY KEY NONCLUSTERED (
-        [BillOfMaterialsID] ASC
-    )
+    CONSTRAINT [PK_BillOfMaterials_BillOfMaterialsID] PRIMARY KEY NONCLUSTERED ([BillOfMaterialsID] ASC)
 )
 
 ALTER TABLE [Production].[BillOfMaterials] WITH CHECK ADD CONSTRAINT [FK_BillOfMaterials_Product_ProductAssemblyID] FOREIGN KEY ([ProductAssemblyID]) REFERENCES [Production].[Product] ([ProductID])

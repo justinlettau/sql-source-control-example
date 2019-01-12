@@ -10,9 +10,7 @@ CREATE TABLE [Person].[Address]
     [SpatialLocation] geography NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_Address_AddressID] PRIMARY KEY CLUSTERED (
-        [AddressID] ASC
-    )
+    CONSTRAINT [PK_Address_AddressID] PRIMARY KEY CLUSTERED ([AddressID] ASC)
 )
 
 ALTER TABLE [Person].[Address] WITH CHECK ADD CONSTRAINT [FK_Address_StateProvince_StateProvinceID] FOREIGN KEY ([StateProvinceID]) REFERENCES [Person].[StateProvince] ([StateProvinceID])
@@ -22,19 +20,13 @@ IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[
 CREATE UNIQUE NONCLUSTERED INDEX [AK_Address_rowguid] ON [Person].[Address]([rowguid] ASC)
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[Address]') AND name = 'IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode')
-CREATE UNIQUE NONCLUSTERED INDEX [IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode] ON [Person].[Address]([AddressLine1] ASC)
-
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[Address]') AND name = 'IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode')
-CREATE UNIQUE NONCLUSTERED INDEX [IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode] ON [Person].[Address]([AddressLine2] ASC)
-
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[Address]') AND name = 'IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode')
-CREATE UNIQUE NONCLUSTERED INDEX [IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode] ON [Person].[Address]([City] ASC)
-
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[Address]') AND name = 'IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode')
-CREATE UNIQUE NONCLUSTERED INDEX [IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode] ON [Person].[Address]([StateProvinceID] ASC)
-
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[Address]') AND name = 'IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode')
-CREATE UNIQUE NONCLUSTERED INDEX [IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode] ON [Person].[Address]([PostalCode] ASC)
+CREATE UNIQUE NONCLUSTERED INDEX [IX_Address_AddressLine1_AddressLine2_City_StateProvinceID_PostalCode] ON [Person].[Address](
+    [AddressLine1] ASC,
+    [AddressLine2] ASC,
+    [City] ASC,
+    [StateProvinceID] ASC,
+    [PostalCode] ASC
+)
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Person].[Address]') AND name = 'IX_Address_StateProvinceID')
 CREATE NONCLUSTERED INDEX [IX_Address_StateProvinceID] ON [Person].[Address]([StateProvinceID] ASC)

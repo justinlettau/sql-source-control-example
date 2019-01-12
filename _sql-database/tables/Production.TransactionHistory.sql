@@ -10,9 +10,7 @@ CREATE TABLE [Production].[TransactionHistory]
     [Quantity] int NOT NULL,
     [ActualCost] money NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_TransactionHistory_TransactionID] PRIMARY KEY CLUSTERED (
-        [TransactionID] ASC
-    )
+    CONSTRAINT [PK_TransactionHistory_TransactionID] PRIMARY KEY CLUSTERED ([TransactionID] ASC)
 )
 
 ALTER TABLE [Production].[TransactionHistory] WITH CHECK ADD CONSTRAINT [FK_TransactionHistory_Product_ProductID] FOREIGN KEY ([ProductID]) REFERENCES [Production].[Product] ([ProductID])
@@ -22,7 +20,7 @@ IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Productio
 CREATE NONCLUSTERED INDEX [IX_TransactionHistory_ProductID] ON [Production].[TransactionHistory]([ProductID] ASC)
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[TransactionHistory]') AND name = 'IX_TransactionHistory_ReferenceOrderID_ReferenceOrderLineID')
-CREATE NONCLUSTERED INDEX [IX_TransactionHistory_ReferenceOrderID_ReferenceOrderLineID] ON [Production].[TransactionHistory]([ReferenceOrderID] ASC)
-
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[TransactionHistory]') AND name = 'IX_TransactionHistory_ReferenceOrderID_ReferenceOrderLineID')
-CREATE NONCLUSTERED INDEX [IX_TransactionHistory_ReferenceOrderID_ReferenceOrderLineID] ON [Production].[TransactionHistory]([ReferenceOrderLineID] ASC)
+CREATE NONCLUSTERED INDEX [IX_TransactionHistory_ReferenceOrderID_ReferenceOrderLineID] ON [Production].[TransactionHistory](
+    [ReferenceOrderID] ASC,
+    [ReferenceOrderLineID] ASC
+)

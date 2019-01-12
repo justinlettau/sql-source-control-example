@@ -5,9 +5,7 @@ CREATE TABLE [HumanResources].[JobCandidate]
     [BusinessEntityID] int NULL,
     [Resume] xml NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_JobCandidate_JobCandidateID] PRIMARY KEY CLUSTERED (
-        [JobCandidateID] ASC
-    )
+    CONSTRAINT [PK_JobCandidate_JobCandidateID] PRIMARY KEY CLUSTERED ([JobCandidateID] ASC)
 )
 
 ALTER TABLE [HumanResources].[JobCandidate] WITH CHECK ADD CONSTRAINT [FK_JobCandidate_Employee_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [HumanResources].[Employee] ([BusinessEntityID])

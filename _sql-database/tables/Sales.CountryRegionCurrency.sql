@@ -4,7 +4,8 @@ CREATE TABLE [Sales].[CountryRegionCurrency]
     [CountryRegionCode] nvarchar(3) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
     [CurrencyCode] nchar(3) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_CountryRegionCurrency_CountryRegionCode_CurrencyCode] PRIMARY KEY CLUSTERED (
+    CONSTRAINT [PK_CountryRegionCurrency_CountryRegionCode_CurrencyCode] PRIMARY KEY CLUSTERED 
+    (
         [CountryRegionCode] ASC,
         [CurrencyCode] ASC
     )

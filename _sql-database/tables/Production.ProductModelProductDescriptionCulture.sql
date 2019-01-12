@@ -5,7 +5,8 @@ CREATE TABLE [Production].[ProductModelProductDescriptionCulture]
     [ProductDescriptionID] int NOT NULL,
     [CultureID] nchar(6) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID] PRIMARY KEY CLUSTERED (
+    CONSTRAINT [PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID] PRIMARY KEY CLUSTERED 
+    (
         [ProductModelID] ASC,
         [ProductDescriptionID] ASC,
         [CultureID] ASC

@@ -6,7 +6,8 @@ CREATE TABLE [Sales].[SalesPersonQuotaHistory]
     [SalesQuota] money NOT NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_SalesPersonQuotaHistory_BusinessEntityID_QuotaDate] PRIMARY KEY CLUSTERED (
+    CONSTRAINT [PK_SalesPersonQuotaHistory_BusinessEntityID_QuotaDate] PRIMARY KEY CLUSTERED 
+    (
         [BusinessEntityID] ASC,
         [QuotaDate] ASC
     )

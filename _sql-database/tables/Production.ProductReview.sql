@@ -9,16 +9,14 @@ CREATE TABLE [Production].[ProductReview]
     [Rating] int NOT NULL,
     [Comments] nvarchar(3850) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductReview_ProductReviewID] PRIMARY KEY CLUSTERED (
-        [ProductReviewID] ASC
-    )
+    CONSTRAINT [PK_ProductReview_ProductReviewID] PRIMARY KEY CLUSTERED ([ProductReviewID] ASC)
 )
 
 ALTER TABLE [Production].[ProductReview] WITH CHECK ADD CONSTRAINT [FK_ProductReview_Product_ProductID] FOREIGN KEY ([ProductID]) REFERENCES [Production].[Product] ([ProductID])
 ALTER TABLE [Production].[ProductReview] CHECK CONSTRAINT [FK_ProductReview_Product_ProductID]
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[ProductReview]') AND name = 'IX_ProductReview_ProductID_Name')
-CREATE NONCLUSTERED INDEX [IX_ProductReview_ProductID_Name] ON [Production].[ProductReview]([ProductID] ASC)
-
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[ProductReview]') AND name = 'IX_ProductReview_ProductID_Name')
-CREATE NONCLUSTERED INDEX [IX_ProductReview_ProductID_Name] ON [Production].[ProductReview]([ReviewerName] ASC)
+CREATE NONCLUSTERED INDEX [IX_ProductReview_ProductID_Name] ON [Production].[ProductReview](
+    [ProductID] ASC,
+    [ReviewerName] ASC
+)

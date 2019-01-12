@@ -15,9 +15,7 @@ CREATE TABLE [Production].[Document]
     [Document] varbinary(max) NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_Document_DocumentNode] PRIMARY KEY CLUSTERED (
-        [DocumentNode] ASC
-    )
+    CONSTRAINT [PK_Document_DocumentNode] PRIMARY KEY CLUSTERED ([DocumentNode] ASC)
 )
 
 ALTER TABLE [HumanResources].[Document] WITH CHECK ADD CONSTRAINT [FK_Document_Employee_Owner] FOREIGN KEY ([Owner]) REFERENCES [HumanResources].[Employee] ([BusinessEntityID])
@@ -27,16 +25,16 @@ IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Productio
 CREATE UNIQUE NONCLUSTERED INDEX [UQ__Document__F73921F7C5112C2E] ON [Production].[Document]([rowguid] ASC)
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'AK_Document_DocumentLevel_DocumentNode')
-CREATE UNIQUE NONCLUSTERED INDEX [AK_Document_DocumentLevel_DocumentNode] ON [Production].[Document]([DocumentLevel] ASC)
-
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'AK_Document_DocumentLevel_DocumentNode')
-CREATE UNIQUE NONCLUSTERED INDEX [AK_Document_DocumentLevel_DocumentNode] ON [Production].[Document]([DocumentNode] ASC)
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Document_DocumentLevel_DocumentNode] ON [Production].[Document](
+    [DocumentLevel] ASC,
+    [DocumentNode] ASC
+)
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'AK_Document_rowguid')
 CREATE UNIQUE NONCLUSTERED INDEX [AK_Document_rowguid] ON [Production].[Document]([rowguid] ASC)
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'IX_Document_FileName_Revision')
-CREATE NONCLUSTERED INDEX [IX_Document_FileName_Revision] ON [Production].[Document]([FileName] ASC)
-
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'IX_Document_FileName_Revision')
-CREATE NONCLUSTERED INDEX [IX_Document_FileName_Revision] ON [Production].[Document]([Revision] ASC)
+CREATE NONCLUSTERED INDEX [IX_Document_FileName_Revision] ON [Production].[Document](
+    [FileName] ASC,
+    [Revision] ASC
+)

@@ -13,7 +13,8 @@ CREATE TABLE [Production].[WorkOrderRouting]
     [PlannedCost] money NOT NULL,
     [ActualCost] money NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence] PRIMARY KEY CLUSTERED (
+    CONSTRAINT [PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence] PRIMARY KEY CLUSTERED 
+    (
         [WorkOrderID] ASC,
         [ProductID] ASC,
         [OperationSequence] ASC

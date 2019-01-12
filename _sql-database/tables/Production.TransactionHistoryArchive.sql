@@ -10,16 +10,14 @@ CREATE TABLE [Production].[TransactionHistoryArchive]
     [Quantity] int NOT NULL,
     [ActualCost] money NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_TransactionHistoryArchive_TransactionID] PRIMARY KEY CLUSTERED (
-        [TransactionID] ASC
-    )
+    CONSTRAINT [PK_TransactionHistoryArchive_TransactionID] PRIMARY KEY CLUSTERED ([TransactionID] ASC)
 )
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[TransactionHistoryArchive]') AND name = 'IX_TransactionHistoryArchive_ProductID')
 CREATE NONCLUSTERED INDEX [IX_TransactionHistoryArchive_ProductID] ON [Production].[TransactionHistoryArchive]([ProductID] ASC)
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[TransactionHistoryArchive]') AND name = 'IX_TransactionHistoryArchive_ReferenceOrderID_ReferenceOrderLineID')
-CREATE NONCLUSTERED INDEX [IX_TransactionHistoryArchive_ReferenceOrderID_ReferenceOrderLineID] ON [Production].[TransactionHistoryArchive]([ReferenceOrderID] ASC)
-
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[TransactionHistoryArchive]') AND name = 'IX_TransactionHistoryArchive_ReferenceOrderID_ReferenceOrderLineID')
-CREATE NONCLUSTERED INDEX [IX_TransactionHistoryArchive_ReferenceOrderID_ReferenceOrderLineID] ON [Production].[TransactionHistoryArchive]([ReferenceOrderLineID] ASC)
+CREATE NONCLUSTERED INDEX [IX_TransactionHistoryArchive_ReferenceOrderID_ReferenceOrderLineID] ON [Production].[TransactionHistoryArchive](
+    [ReferenceOrderID] ASC,
+    [ReferenceOrderLineID] ASC
+)

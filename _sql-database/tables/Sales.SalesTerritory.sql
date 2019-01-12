@@ -11,9 +11,7 @@ CREATE TABLE [Sales].[SalesTerritory]
     [CostLastYear] money NOT NULL DEFAULT((0.00)),
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_SalesTerritory_TerritoryID] PRIMARY KEY CLUSTERED (
-        [TerritoryID] ASC
-    )
+    CONSTRAINT [PK_SalesTerritory_TerritoryID] PRIMARY KEY CLUSTERED ([TerritoryID] ASC)
 )
 
 ALTER TABLE [Person].[SalesTerritory] WITH CHECK ADD CONSTRAINT [FK_SalesTerritory_CountryRegion_CountryRegionCode] FOREIGN KEY ([CountryRegionCode]) REFERENCES [Person].[CountryRegion] ([CountryRegionCode])

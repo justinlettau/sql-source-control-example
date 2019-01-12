@@ -12,7 +12,8 @@ CREATE TABLE [Purchasing].[PurchaseOrderDetail]
     [RejectedQty] decimal(8, 2) NOT NULL,
     [StockedQty] AS (isnull([ReceivedQty]-[RejectedQty],(0.00))),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_PurchaseOrderDetail_PurchaseOrderID_PurchaseOrderDetailID] PRIMARY KEY CLUSTERED (
+    CONSTRAINT [PK_PurchaseOrderDetail_PurchaseOrderID_PurchaseOrderDetailID] PRIMARY KEY CLUSTERED 
+    (
         [PurchaseOrderID] ASC,
         [PurchaseOrderDetailID] ASC
     )

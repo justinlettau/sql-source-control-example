@@ -17,9 +17,7 @@ CREATE TABLE [HumanResources].[Employee]
     [CurrentFlag] Flag NOT NULL DEFAULT((1)),
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_Employee_BusinessEntityID] PRIMARY KEY CLUSTERED (
-        [BusinessEntityID] ASC
-    )
+    CONSTRAINT [PK_Employee_BusinessEntityID] PRIMARY KEY CLUSTERED ([BusinessEntityID] ASC)
 )
 
 ALTER TABLE [Person].[Employee] WITH CHECK ADD CONSTRAINT [FK_Employee_Person_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [Person].[Person] ([BusinessEntityID])
@@ -29,10 +27,10 @@ IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[HumanReso
 CREATE NONCLUSTERED INDEX [IX_Employee_OrganizationNode] ON [HumanResources].[Employee]([OrganizationNode] ASC)
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[HumanResources].[Employee]') AND name = 'IX_Employee_OrganizationLevel_OrganizationNode')
-CREATE NONCLUSTERED INDEX [IX_Employee_OrganizationLevel_OrganizationNode] ON [HumanResources].[Employee]([OrganizationLevel] ASC)
-
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[HumanResources].[Employee]') AND name = 'IX_Employee_OrganizationLevel_OrganizationNode')
-CREATE NONCLUSTERED INDEX [IX_Employee_OrganizationLevel_OrganizationNode] ON [HumanResources].[Employee]([OrganizationNode] ASC)
+CREATE NONCLUSTERED INDEX [IX_Employee_OrganizationLevel_OrganizationNode] ON [HumanResources].[Employee](
+    [OrganizationLevel] ASC,
+    [OrganizationNode] ASC
+)
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[HumanResources].[Employee]') AND name = 'AK_Employee_LoginID')
 CREATE UNIQUE NONCLUSTERED INDEX [AK_Employee_LoginID] ON [HumanResources].[Employee]([LoginID] ASC)

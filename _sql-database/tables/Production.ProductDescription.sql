@@ -5,9 +5,7 @@ CREATE TABLE [Production].[ProductDescription]
     [Description] nvarchar(400) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductDescription_ProductDescriptionID] PRIMARY KEY CLUSTERED (
-        [ProductDescriptionID] ASC
-    )
+    CONSTRAINT [PK_ProductDescription_ProductDescriptionID] PRIMARY KEY CLUSTERED ([ProductDescriptionID] ASC)
 )
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[ProductDescription]') AND name = 'AK_ProductDescription_rowguid')

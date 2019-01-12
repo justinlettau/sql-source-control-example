@@ -7,9 +7,7 @@ CREATE TABLE [Sales].[CreditCard]
     [ExpMonth] tinyint NOT NULL,
     [ExpYear] smallint NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_CreditCard_CreditCardID] PRIMARY KEY CLUSTERED (
-        [CreditCardID] ASC
-    )
+    CONSTRAINT [PK_CreditCard_CreditCardID] PRIMARY KEY CLUSTERED ([CreditCardID] ASC)
 )
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Sales].[CreditCard]') AND name = 'AK_CreditCard_CardNumber')

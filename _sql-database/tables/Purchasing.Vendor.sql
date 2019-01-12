@@ -9,9 +9,7 @@ CREATE TABLE [Purchasing].[Vendor]
     [ActiveFlag] Flag NOT NULL DEFAULT((1)),
     [PurchasingWebServiceURL] nvarchar(1024) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_Vendor_BusinessEntityID] PRIMARY KEY CLUSTERED (
-        [BusinessEntityID] ASC
-    )
+    CONSTRAINT [PK_Vendor_BusinessEntityID] PRIMARY KEY CLUSTERED ([BusinessEntityID] ASC)
 )
 
 ALTER TABLE [Person].[Vendor] WITH CHECK ADD CONSTRAINT [FK_Vendor_BusinessEntity_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [Person].[BusinessEntity] ([BusinessEntityID])

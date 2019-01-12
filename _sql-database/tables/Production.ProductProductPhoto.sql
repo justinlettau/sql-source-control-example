@@ -5,7 +5,8 @@ CREATE TABLE [Production].[ProductProductPhoto]
     [ProductPhotoID] int NOT NULL,
     [Primary] Flag NOT NULL DEFAULT((0)),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductProductPhoto_ProductID_ProductPhotoID] PRIMARY KEY NONCLUSTERED (
+    CONSTRAINT [PK_ProductProductPhoto_ProductID_ProductPhotoID] PRIMARY KEY NONCLUSTERED 
+    (
         [ProductID] ASC,
         [ProductPhotoID] ASC
     )

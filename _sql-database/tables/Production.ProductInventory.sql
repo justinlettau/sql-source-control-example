@@ -8,7 +8,8 @@ CREATE TABLE [Production].[ProductInventory]
     [Quantity] smallint NOT NULL DEFAULT((0)),
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductInventory_ProductID_LocationID] PRIMARY KEY CLUSTERED (
+    CONSTRAINT [PK_ProductInventory_ProductID_LocationID] PRIMARY KEY CLUSTERED 
+    (
         [ProductID] ASC,
         [LocationID] ASC
     )

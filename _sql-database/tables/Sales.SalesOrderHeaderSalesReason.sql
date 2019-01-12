@@ -4,7 +4,8 @@ CREATE TABLE [Sales].[SalesOrderHeaderSalesReason]
     [SalesOrderID] int NOT NULL,
     [SalesReasonID] int NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_SalesOrderHeaderSalesReason_SalesOrderID_SalesReasonID] PRIMARY KEY CLUSTERED (
+    CONSTRAINT [PK_SalesOrderHeaderSalesReason_SalesOrderID_SalesReasonID] PRIMARY KEY CLUSTERED 
+    (
         [SalesOrderID] ASC,
         [SalesReasonID] ASC
     )

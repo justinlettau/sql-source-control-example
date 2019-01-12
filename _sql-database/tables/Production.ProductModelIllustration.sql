@@ -4,7 +4,8 @@ CREATE TABLE [Production].[ProductModelIllustration]
     [ProductModelID] int NOT NULL,
     [IllustrationID] int NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_ProductModelIllustration_ProductModelID_IllustrationID] PRIMARY KEY CLUSTERED (
+    CONSTRAINT [PK_ProductModelIllustration_ProductModelID_IllustrationID] PRIMARY KEY CLUSTERED 
+    (
         [ProductModelID] ASC,
         [IllustrationID] ASC
     )

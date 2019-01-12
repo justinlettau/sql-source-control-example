@@ -7,7 +7,8 @@ CREATE TABLE [HumanResources].[EmployeeDepartmentHistory]
     [StartDate] date NOT NULL,
     [EndDate] date NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
-    CONSTRAINT [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] PRIMARY KEY CLUSTERED (
+    CONSTRAINT [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] PRIMARY KEY CLUSTERED 
+    (
         [BusinessEntityID] ASC,
         [DepartmentID] ASC,
         [ShiftID] ASC,
