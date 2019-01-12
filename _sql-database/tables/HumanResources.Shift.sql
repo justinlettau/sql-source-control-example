@@ -2,7 +2,7 @@ IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[HumanReso
 CREATE TABLE [HumanResources].[Shift]
 (
     [ShiftID] tinyint NOT NULL IDENTITY(1, 1),
-    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Name] Name NOT NULL,
     [StartTime] time NOT NULL,
     [EndTime] time NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),

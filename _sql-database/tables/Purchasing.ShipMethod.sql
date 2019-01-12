@@ -2,7 +2,7 @@ IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Purchasin
 CREATE TABLE [Purchasing].[ShipMethod]
 (
     [ShipMethodID] int NOT NULL IDENTITY(1, 1),
-    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Name] Name NOT NULL,
     [ShipBase] money NOT NULL DEFAULT((0.00)),
     [ShipRate] money NOT NULL DEFAULT((0.00)),
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),

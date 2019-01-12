@@ -2,7 +2,7 @@ IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[Productio
 CREATE TABLE [Production].[ProductCategory]
 (
     [ProductCategoryID] int NOT NULL IDENTITY(1, 1),
-    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Name] Name NOT NULL,
     [rowguid] uniqueidentifier NOT NULL DEFAULT(newid()),
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
     CONSTRAINT [PK_ProductCategory_ProductCategoryID] PRIMARY KEY CLUSTERED ([ProductCategoryID] ASC)

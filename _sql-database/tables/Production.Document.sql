@@ -18,8 +18,11 @@ CREATE TABLE [Production].[Document]
     CONSTRAINT [PK_Document_DocumentNode] PRIMARY KEY CLUSTERED ([DocumentNode] ASC)
 )
 
-ALTER TABLE [HumanResources].[Document] WITH CHECK ADD CONSTRAINT [FK_Document_Employee_Owner] FOREIGN KEY ([Owner]) REFERENCES [HumanResources].[Employee] ([BusinessEntityID])
-ALTER TABLE [HumanResources].[Document] CHECK CONSTRAINT [FK_Document_Employee_Owner]
+IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID('[Production].[FK_Document_Employee_Owner]') AND parent_object_id = OBJECT_ID('[Production].[Document]'))
+BEGIN
+    ALTER TABLE [Production].[Document] WITH CHECK ADD CONSTRAINT [FK_Document_Employee_Owner] FOREIGN KEY ([Owner]) REFERENCES [HumanResources].[Employee] ([BusinessEntityID])
+    ALTER TABLE [Production].[Document] CHECK CONSTRAINT [FK_Document_Employee_Owner]
+END
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'UQ__Document__F73921F7C5112C2E')
 CREATE UNIQUE NONCLUSTERED INDEX [UQ__Document__F73921F7C5112C2E] ON [Production].[Document]([rowguid] ASC)

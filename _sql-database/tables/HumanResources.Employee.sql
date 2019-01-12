@@ -20,8 +20,11 @@ CREATE TABLE [HumanResources].[Employee]
     CONSTRAINT [PK_Employee_BusinessEntityID] PRIMARY KEY CLUSTERED ([BusinessEntityID] ASC)
 )
 
-ALTER TABLE [Person].[Employee] WITH CHECK ADD CONSTRAINT [FK_Employee_Person_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [Person].[Person] ([BusinessEntityID])
-ALTER TABLE [Person].[Employee] CHECK CONSTRAINT [FK_Employee_Person_BusinessEntityID]
+IF NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE object_id = OBJECT_ID('[HumanResources].[FK_Employee_Person_BusinessEntityID]') AND parent_object_id = OBJECT_ID('[HumanResources].[Employee]'))
+BEGIN
+    ALTER TABLE [HumanResources].[Employee] WITH CHECK ADD CONSTRAINT [FK_Employee_Person_BusinessEntityID] FOREIGN KEY ([BusinessEntityID]) REFERENCES [Person].[Person] ([BusinessEntityID])
+    ALTER TABLE [HumanResources].[Employee] CHECK CONSTRAINT [FK_Employee_Person_BusinessEntityID]
+END
 
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[HumanResources].[Employee]') AND name = 'IX_Employee_OrganizationNode')
 CREATE NONCLUSTERED INDEX [IX_Employee_OrganizationNode] ON [HumanResources].[Employee]([OrganizationNode] ASC)

@@ -2,8 +2,8 @@ IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('[HumanReso
 CREATE TABLE [HumanResources].[Department]
 (
     [DepartmentID] smallint NOT NULL IDENTITY(1, 1),
-    [Name] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-    [GroupName] Name COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Name] Name NOT NULL,
+    [GroupName] Name NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
     CONSTRAINT [PK_Department_DepartmentID] PRIMARY KEY CLUSTERED ([DepartmentID] ASC)
 )
