@@ -8,5 +8,4 @@ INSERT INTO [Purchasing].[ShipMethod] (ShipMethodID, Name, ShipBase, ShipRate, r
 INSERT INTO [Purchasing].[ShipMethod] (ShipMethodID, Name, ShipBase, ShipRate, rowguid, ModifiedDate) VALUES (4, 'OVERNIGHT J-FAST', 21.95, 1.29, '107E8356-E7A8-463D-B60C-079FFF467F3F', '2008-04-30T00:00:00.000Z')
 INSERT INTO [Purchasing].[ShipMethod] (ShipMethodID, Name, ShipBase, ShipRate, rowguid, ModifiedDate) VALUES (5, 'CARGO TRANSPORT 5', 8.99, 1.49, 'B166019A-B134-4E76-B957-2B0490C610ED', '2008-04-30T00:00:00.000Z')
 
-SET IDENTITY_INSERT [Purchasing].[ShipMethod]
-       OFF
+SET IDENTITY_INSERT [Purchasing].[ShipMethod] OFF

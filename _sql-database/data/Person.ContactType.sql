@@ -23,5 +23,4 @@ INSERT INTO [Person].[ContactType] (ContactTypeID, Name, ModifiedDate) VALUES (1
 INSERT INTO [Person].[ContactType] (ContactTypeID, Name, ModifiedDate) VALUES (19, 'Sales Manager', '2008-04-30T00:00:00.000Z')
 INSERT INTO [Person].[ContactType] (ContactTypeID, Name, ModifiedDate) VALUES (20, 'Sales Representative', '2008-04-30T00:00:00.000Z')
 
-SET IDENTITY_INSERT [Person].[ContactType]
-       OFF
+SET IDENTITY_INSERT [Person].[ContactType] OFF

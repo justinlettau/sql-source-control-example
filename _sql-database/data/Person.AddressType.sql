@@ -9,5 +9,4 @@ INSERT INTO [Person].[AddressType] (AddressTypeID, Name, rowguid, ModifiedDate) 
 INSERT INTO [Person].[AddressType] (AddressTypeID, Name, rowguid, ModifiedDate) VALUES (5, 'Shipping', 'B29DA3F8-19A3-47DA-9DAA-15C84F4A83A5', '2008-04-30T00:00:00.000Z')
 INSERT INTO [Person].[AddressType] (AddressTypeID, Name, rowguid, ModifiedDate) VALUES (6, 'Archive', 'A67F238A-5BA2-444B-966C-0467ED9C427F', '2008-04-30T00:00:00.000Z')
 
-SET IDENTITY_INSERT [Person].[AddressType]
-       OFF
+SET IDENTITY_INSERT [Person].[AddressType] OFF

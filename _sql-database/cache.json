@@ -134,10 +134,10 @@
     "./_sql-database/types/dbo.Name.sql": "63b77aab82230cf5613ef06421329e9e0d53028e",
     "./_sql-database/types/dbo.OrderNumber.sql": "b5b7741933db9658ad02816652109c4abdbaa4ca",
     "./_sql-database/types/dbo.Phone.sql": "4a3b82ce5e309f44354a7694e453ca78dfae0427",
-    "./_sql-database/data/Person.AddressType.sql": "1945ff94a03cf80b6c5778ec190f10815f1e3aa9",
-    "./_sql-database/data/Person.ContactType.sql": "779dfe1f8e1776bd495b15193dbbe2c2a7dc7483",
+    "./_sql-database/data/Person.AddressType.sql": "b4b114619f8775ab9f1a99a1a33aee3e87968456",
+    "./_sql-database/data/Person.ContactType.sql": "6c5a092b5a8ba36459789da8c8c1dcd09b2fe0a0",
     "./_sql-database/data/Person.CountryRegion.sql": "50215c0a214eb20e6882329ff26b0a839d3e2625",
-    "./_sql-database/data/Person.PhoneNumberType.sql": "355d9e25128e5a4dd527717c42adbe2d90e02473",
-    "./_sql-database/data/Purchasing.ShipMethod.sql": "a7a6517d128a251bbdcaab1c3921a68761ad1504"
+    "./_sql-database/data/Person.PhoneNumberType.sql": "49561e8b0201f6d869fdc3b034332b656e02aa30",
+    "./_sql-database/data/Purchasing.ShipMethod.sql": "718cd7615faa5c9915b9d8bee486eb79343ab2fd"
   }
 }
