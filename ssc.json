@@ -6,7 +6,7 @@
       "port": 1433,
       "database": "AdventureWorks2017",
       "user": "sa",
-      "password": "password"
+      "password": "Password12!"
     }
   ],
   "data": [

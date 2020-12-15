@@ -24,15 +24,6 @@ BEGIN
     ALTER TABLE [Production].[Document] CHECK CONSTRAINT [FK_Document_Employee_Owner]
 END
 
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'UQ__Document__F73921F7C5112C2E')
-CREATE UNIQUE NONCLUSTERED INDEX [UQ__Document__F73921F7C5112C2E] ON [Production].[Document]([rowguid] ASC)
-
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'AK_Document_DocumentLevel_DocumentNode')
-CREATE UNIQUE NONCLUSTERED INDEX [AK_Document_DocumentLevel_DocumentNode] ON [Production].[Document](
-    [DocumentLevel] ASC,
-    [DocumentNode] ASC
-)
-
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'AK_Document_rowguid')
 CREATE UNIQUE NONCLUSTERED INDEX [AK_Document_rowguid] ON [Production].[Document]([rowguid] ASC)
 
@@ -40,4 +31,13 @@ IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Productio
 CREATE NONCLUSTERED INDEX [IX_Document_FileName_Revision] ON [Production].[Document](
     [FileName] ASC,
     [Revision] ASC
+)
+
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'UQ__Document__F73921F7C5112C2E')
+CREATE UNIQUE NONCLUSTERED INDEX [UQ__Document__F73921F7C5112C2E] ON [Production].[Document]([rowguid] ASC)
+
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[Document]') AND name = 'AK_Document_DocumentLevel_DocumentNode')
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Document_DocumentLevel_DocumentNode] ON [Production].[Document](
+    [DocumentLevel] ASC,
+    [DocumentNode] ASC
 )

@@ -10,9 +10,9 @@ CREATE TABLE [HumanResources].[EmployeeDepartmentHistory]
     CONSTRAINT [PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] PRIMARY KEY CLUSTERED 
     (
         [BusinessEntityID] ASC,
+        [StartDate] ASC,
         [DepartmentID] ASC,
-        [ShiftID] ASC,
-        [StartDate] ASC
+        [ShiftID] ASC
     )
 )
 

@@ -31,5 +31,12 @@ BEGIN
     ALTER TABLE [Production].[BillOfMaterials] CHECK CONSTRAINT [FK_BillOfMaterials_UnitMeasure_UnitMeasureCode]
 END
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[BillOfMaterials]') AND name = 'AK_BillOfMaterials_ProductAssemblyID_ComponentID_StartDate')
+CREATE UNIQUE CLUSTERED INDEX [AK_BillOfMaterials_ProductAssemblyID_ComponentID_StartDate] ON [Production].[BillOfMaterials](
+    [ProductAssemblyID] ASC,
+    [ComponentID] ASC,
+    [StartDate] ASC
+)
+
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('[Production].[BillOfMaterials]') AND name = 'IX_BillOfMaterials_UnitMeasureCode')
 CREATE NONCLUSTERED INDEX [IX_BillOfMaterials_UnitMeasureCode] ON [Production].[BillOfMaterials]([UnitMeasureCode] ASC)

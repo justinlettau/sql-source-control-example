@@ -10,8 +10,8 @@ CREATE TABLE [Sales].[SalesTerritoryHistory]
     CONSTRAINT [PK_SalesTerritoryHistory_BusinessEntityID_StartDate_TerritoryID] PRIMARY KEY CLUSTERED 
     (
         [BusinessEntityID] ASC,
-        [TerritoryID] ASC,
-        [StartDate] ASC
+        [StartDate] ASC,
+        [TerritoryID] ASC
     )
 )
 

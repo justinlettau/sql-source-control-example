@@ -12,7 +12,7 @@ CREATE TABLE [Purchasing].[PurchaseOrderHeader]
     [SubTotal] money NOT NULL DEFAULT((0.00)),
     [TaxAmt] money NOT NULL DEFAULT((0.00)),
     [Freight] money NOT NULL DEFAULT((0.00)),
-    [TotalDue] AS (isnull(([SubTotal]+[TaxAmt])+[Freight],(0))),
+    [TotalDue] AS (isnull(([SubTotal]+[TaxAmt])+[Freight],(0))) PERSISTED NOT NULL,
     [ModifiedDate] datetime NOT NULL DEFAULT(getdate()),
     CONSTRAINT [PK_PurchaseOrderHeader_PurchaseOrderID] PRIMARY KEY CLUSTERED ([PurchaseOrderID] ASC)
 )
